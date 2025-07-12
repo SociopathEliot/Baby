@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/secondgraph.xml"
+    app:startDestination="@id/matchScheduleFragment">
+
+    <fragment
+        android:id="@+id/matchScheduleFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragment"
+        android:label="fragment_match_schedule"
+        tools:layout="@layout/fragment_match_schedule" />
+</navigation>
