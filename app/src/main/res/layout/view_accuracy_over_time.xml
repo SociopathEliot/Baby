@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+
+    <FrameLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp">
+
+        <!-- Сам круг -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!-- Легенда в центре -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <!-- Correct -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:backgroundTint="#FF4E4E"
+                    android:background="@drawable/oval_shape" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="CORRECT"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <!-- Uncorrect -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:backgroundTint="#FFCE01"
+                    android:background="@drawable/oval_shape" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="UNCORRECT"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+
+            <!-- Pending -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:backgroundTint="#4EFF4E"
+                    android:background="@drawable/oval_shape" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="PENDING"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Текстовая часть справа -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Accuracy Over Time"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Last Month: 68%"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="This Month: 71%"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+</LinearLayout>

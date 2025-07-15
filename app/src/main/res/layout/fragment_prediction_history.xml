@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    tools:context=".presentation.ui.fragments.main.PredictionHistoryFragment">
+
+    <ImageButton
+        android:id="@+id/btnHelp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_round_dark"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/tutorial_ic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_card_top_round"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHelp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prediction History"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/toggleCard"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#171717"
+            android:layout_marginHorizontal="20dp"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/toggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnYesterday"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:text="All"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="100dp"
+                    app:strokeWidth="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToday"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:text="Winner"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    app:backgroundTint="#FFCE01"
+                    app:cornerRadius="100dp"
+                    app:strokeWidth="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTomorrow"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:text="Lost"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="100dp"
+                    app:strokeWidth="0dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/predictions_history_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_history_prediction"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

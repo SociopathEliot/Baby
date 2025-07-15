@@ -1,0 +1,26 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Внешний градиент (рамка) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#313131"
+                android:endColor="#FFCE01" />
+            <corners android:radius="28dp"/>
+        </shape>
+    </item>
+
+    <!-- Внутренняя черная заливка (центр карточки) -->
+    <item
+        android:left="4dp"
+        android:bottom="4dp"
+        android:right="4dp"
+        android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000"/>
+            <!-- !!! увеличен радиус до 28dp, как у внешнего слоя -->
+            <corners android:radius="28dp"/>
+        </shape>
+    </item>
+</layer-list>

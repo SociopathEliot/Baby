@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme.MyApplication" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
@@ -21,6 +21,25 @@
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
+    <!-- styles.xml -->
+    <style name="Widget.MyApp.ToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/toggle_btn_bg</item>
+        <item name="android:textColor">@color/toggle_btn_text</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="strokeColor">@color/black</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+    </style>
+    <!-- в styles.xml -->
+    <style name="ShapeAppearance.Rounded12dp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+
+
 
 
 </resources>

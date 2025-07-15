@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="6dp"
+    android:height="2dp"
+    android:viewportWidth="6"
+    android:viewportHeight="2">
+    <!-- треугольник, который будет «выкрашиваться» стандартным accent-цветом -->
+    <path
+        android:fillColor="#FFFFFFFF"
+    android:pathData="M0,2 L3,0 L6,2 Z"/>
+</vector>

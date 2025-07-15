@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    tools:context=".presentation.ui.fragments.main.AchievementsFragment">
+
+    <ImageButton
+        android:id="@+id/btnHelp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_round_dark"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/tutorial_ic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_card_top_round"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHelp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="Achievements"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!-- PREDICTED -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#000000"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_card_stroke_gradient"
+                            android:padding="2dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                android:clipToOutline="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="12"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="28sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="ACHIEVEMENTS"
+                                    android:textColor="#9F9F9F"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- UPCOMING -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="120dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#000000"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_card_stroke_gradient"
+                            android:padding="2dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="2dp"
+                                android:clipToOutline="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="EXPERT"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="28sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Level"
+                                    android:textColor="#9F9F9F"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#1A1A1A"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <!-- Иконка + заголовок + подзаголовок -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- Здесь вместо emoji можно вставить ImageView с вашим drawable -->
+                            <TextView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="🥇"
+                                android:textSize="24sp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="10 Predictions in a Row"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Make 10 cerrect predictions\nwithout losing."
+                                    android:textColor="#CCCCCC"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Прогресс-бар + текст справа -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="8dp"
+                                android:text="100 % completed"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <!-- Фоновая полоса -->
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/progressIndicator"
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="5dp"
+                                app:hideAnimationBehavior="none"
+                                android:indeterminate="false"
+                                app:indicatorColor="#FFCE01"
+                                android:progress="0"
+                                app:showAnimationBehavior="none"
+                                app:trackColor="#333333" />
+
+                            <!-- Процент -->
+
+                        </LinearLayout>
+
+                        <!-- Кнопка Claim Reward -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnClaimReward"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="40dp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:minHeight="0dp"
+                            android:text="Claim Reward"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:backgroundTint="@android:color/transparent"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="#FFFFFF"
+                            app:strokeWidth="1dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#1A1A1A"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <!-- Иконка + заголовок + подзаголовок -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- Здесь вместо emoji можно вставить ImageView с вашим drawable -->
+                            <TextView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="👑"
+                                android:textSize="24sp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="Tournament Predictor"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Predict the out come of a\ntournamet "
+                                    android:textColor="#CCCCCC"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Прогресс-бар + текст справа -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textPercent2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="8dp"
+                                android:text="100 % completed"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <!-- Фоновая полоса -->
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/progressIndicator2"
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="5dp"
+                                app:hideAnimationBehavior="none"
+                                android:indeterminate="false"
+                                app:indicatorColor="#FFCE01"
+                                android:progress="0"
+                                app:showAnimationBehavior="none"
+                                app:trackColor="#333333" />
+
+                            <!-- Процент -->
+
+                        </LinearLayout>
+
+                        <!-- Кнопка Claim Reward -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnClaimReward2"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="40dp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:minHeight="0dp"
+                            android:text="Claim Reward"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:backgroundTint="@android:color/transparent"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="#FFFFFF"
+                            app:strokeWidth="1dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#1A1A1A"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <!-- Иконка + заголовок + подзаголовок -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- Здесь вместо emoji можно вставить ImageView с вашим drawable -->
+                            <TextView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="🎉"
+                                android:textSize="24sp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="First Win"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Win your first prediction"
+                                    android:textColor="#CCCCCC"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Прогресс-бар + текст справа -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textPercent3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="8dp"
+                                android:text="100 % completed"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp" />
+
+                            <!-- Фоновая полоса -->
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/progressIndicator3"
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:layout_marginTop="5dp"
+                                app:hideAnimationBehavior="none"
+                                android:indeterminate="false"
+                                app:indicatorColor="#FFCE01"
+                                android:progress="0"
+                                app:showAnimationBehavior="none"
+                                app:trackColor="#333333" />
+
+                            <!-- Процент -->
+
+                        </LinearLayout>
+
+                        <!-- Кнопка Claim Reward -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnClaimReward3"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="40dp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:minHeight="0dp"
+                            android:text="Claim Reward"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:backgroundTint="@android:color/transparent"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="#FFFFFF"
+                            app:strokeWidth="1dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

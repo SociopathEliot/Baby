@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    tools:context=".presentation.ui.fragments.main.TutorialFragment">
+
+    <ImageButton
+        android:id="@+id/btnHelp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_round_dark"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/tutorial_ic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_card_top_round"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHelp">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- STEP 1 -->
+                <TextView
+                    android:id="@+id/tvStep1Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1: Explore the Match Schedule"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/montserrat_bold"/>
+
+                <TextView
+                    android:id="@+id/tvStep1Desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Navigate to the Match Schedule to view upcoming matches and their details"
+                    android:textSize="14sp"
+                    android:textColor="#DDDDDD"
+                    android:fontFamily="@font/montserrat_regular"/>
+
+                <ImageView
+                    android:id="@+id/ivStep1Image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"
+                    android:padding="20dp"
+                    android:src="@drawable/tutorial_schedule_image"/>
+
+                <TextView
+                    android:id="@+id/tvStep1Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Example of the Match Schedule screen"
+                    android:textSize="12sp"
+                    android:textColor="#AAAAAA"
+                    android:fontFamily="@font/montserrat_regular"/>
+
+                <!-- STEP 2 -->
+                <TextView
+                    android:id="@+id/tvStep2Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Step 2: Make Predictions"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/montserrat_bold"/>
+
+                <TextView
+                    android:id="@+id/tvStep2Desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Select a match and tap Make a Prediction to choose the outcome you expect."
+                    android:textSize="14sp"
+                    android:textColor="#DDDDDD"
+                    android:fontFamily="@font/montserrat_regular"/>
+
+                <ImageView
+                    android:id="@+id/ivStep2Image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"
+                    android:padding="20dp"
+                    android:src="@drawable/tutorial_predictions_image"/>
+
+                <TextView
+                    android:id="@+id/tvStep2Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Prediction screen"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textColor="#AAAAAA"
+                    android:fontFamily="@font/montserrat_regular"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCloseTutorial"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="16dp"
+                    android:text="Close Tutorial"
+                    android:textSize="16sp"
+                    android:backgroundTint="@color/yellow"
+                    app:cornerRadius="20dp"
+                    android:textColor="#121212"
+                    android:fontFamily="@font/montserrat_medium"
+                    />
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

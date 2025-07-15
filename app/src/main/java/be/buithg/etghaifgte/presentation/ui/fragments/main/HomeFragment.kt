@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.FragmentHomeBinding
 
@@ -30,5 +31,8 @@ class HomeFragment : Fragment() {
         val navHostFragment = childFragmentManager
             .findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController: NavController = navHostFragment.navController
+
+        binding.bottomNavigationView.setupWithNavController(navController)
+
     }
 }

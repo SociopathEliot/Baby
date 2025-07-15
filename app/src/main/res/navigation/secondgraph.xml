@@ -10,4 +10,24 @@
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragment"
         android:label="fragment_match_schedule"
         tools:layout="@layout/fragment_match_schedule" />
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.StatsFragment"
+        android:label="fragment_stats"
+        tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/predictionsFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.PredictionsFragment"
+        android:label="fragment_predictions"
+        tools:layout="@layout/fragment_predictions" />
+    <fragment
+        android:id="@+id/predictionHistoryFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.PredictionHistoryFragment"
+        android:label="fragment_prediction_history"
+        tools:layout="@layout/fragment_prediction_history" />
+    <fragment
+        android:id="@+id/blogFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.BlogFragment"
+        android:label="fragment_blog"
+        tools:layout="@layout/fragment_blog" />
 </navigation>

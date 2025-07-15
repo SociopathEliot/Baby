@@ -1,0 +1,88 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="#1A1A1A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <!-- Левый блок -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Время -->
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:30"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium" />
+
+            <!-- Название команд -->
+            <TextView
+                android:id="@+id/textTeams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team A Team B"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_marginTop="4dp" />
+
+            <!-- Прогноз -->
+            <TextView
+                android:id="@+id/textPrediction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Pick: Win"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Правый блок -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="end|center_vertical">
+
+            <!-- Дата -->
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12.07.2025"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="end" />
+
+            <!-- Иконка -->
+            <ImageView
+                android:id="@+id/imageResult"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_check_green"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="end"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
