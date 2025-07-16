@@ -41,7 +41,7 @@ class PredictionsAdapter(
                     2 -> if (item.pick == item.teamB) "Win" else "Lose"
                     else -> "Draw"
                 }
-                binding.textPrediction.text = "Your Pick: ${item.pick} - $result"
+                binding.textPrediction.text = "Your Pick: $result"
 
                 val imageRes = if (result == "Lose") {
                     be.buithg.etghaifgte.R.drawable.ic_check_red

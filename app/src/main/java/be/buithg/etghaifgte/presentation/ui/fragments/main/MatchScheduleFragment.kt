@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
 import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragmentDirections
+import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 
 import java.time.LocalDate
@@ -29,6 +30,7 @@ class MatchScheduleFragment : Fragment() {
 
     private lateinit var binding: FragmentMatchScheduleBinding
     private val viewModel: MatchScheduleViewModel by viewModels()
+    private val predictionsViewModel: PredictionsViewModel by viewModels()
     private lateinit var buttons: List<MaterialButton>
     private lateinit var adapter: CricketAdapter
     private var allMatches: List<Data> = emptyList()
@@ -56,6 +58,17 @@ class MatchScheduleFragment : Fragment() {
             filterAndDisplay(selectedBtn ?: binding.btnToday)
 
         }
+
+        predictionsViewModel.predictedCount.observe(viewLifecycleOwner) {
+            binding.tvPredictedCount.text = it.toString()
+        }
+        predictionsViewModel.upcomingCount.observe(viewLifecycleOwner) {
+            binding.tvUpcomingCount.text = it.toString().padStart(2, '0')
+        }
+        predictionsViewModel.wonCount.observe(viewLifecycleOwner) {
+            binding.tvWonCount.text = it.toString().padStart(2, '0')
+        }
+        predictionsViewModel.loadPredictions()
 
         buttons = listOf(
             binding.btnYesterday,
