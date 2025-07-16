@@ -1,5 +1,7 @@
 package be.buithg.etghaifgte.domain.models
 
+import java.io.Serializable
+
 data class Info(
     val cache: Int,
     val credits: Int,
@@ -11,4 +13,4 @@ data class Info(
     val s: Int,
     val server: Int,
     val totalRows: Int
-)
+): Serializable
