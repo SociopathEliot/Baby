@@ -56,17 +56,35 @@
             app:layout_constraintTop_toBottomOf="@+id/tvLeague"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Команды -->
-        <TextView
-            android:id="@+id/tvTeams"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Team A Team B"
-            android:textColor="#FFF"
-            android:fontFamily="@font/montserrat_regular"
-            android:textSize="14sp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTime" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTeams1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team A "
+                android:textColor="#FFF"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="14sp"  />
+            <TextView
+                android:id="@+id/tvTeams2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team B"
+                android:textColor="#FFF"
+                android:fontFamily="@font/montserrat_regular"
+                android:textSize="14sp"
+
+         />
+
+        </LinearLayout>
+        <!-- Команды -->
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

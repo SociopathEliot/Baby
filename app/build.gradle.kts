@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    id("com.google.dagger.hilt.android")
+//    id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -47,6 +47,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    implementation (libs.retrofit)
+    // Конвертер JSON → Kotlin объекты через Gson
+    implementation (libs.converter.gson)
+    // Логирующий интерцептор для отладки HTTP
+    implementation (libs.logging.interceptor)
+
     // Room
     val room_version = "2.7.2"
     implementation("androidx.room:room-runtime:$room_version")
@@ -55,8 +61,8 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
 
     // Hilt still uses KAPT
-    implementation("com.google.dagger:hilt-android:2.56.2")
-    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+//    implementation("com.google.dagger:hilt-android:2.56.2")
+//    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
 
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
