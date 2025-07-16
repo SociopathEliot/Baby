@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import be.buithg.etghaifgte.R
+import androidx.fragment.app.viewModels
 import be.buithg.etghaifgte.databinding.FragmentPredictionsBinding
+import be.buithg.etghaifgte.presentation.ui.adapters.PredictionsAdapter
+import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PredictionsFragment : Fragment() {
 
     private lateinit var binding: FragmentPredictionsBinding
-
-
+    private val viewModel: PredictionsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,5 +27,11 @@ class PredictionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.predictions.observe(viewLifecycleOwner) {
+            binding.recyclerView.apply {
+                adapter = PredictionsAdapter(it)
+            }
+        }
+        viewModel.loadPredictions()
     }
 }
