@@ -180,6 +180,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvDateValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -208,6 +209,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvTimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -236,6 +238,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvCountryValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -264,6 +267,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvCityValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -292,6 +296,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvStadiumValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -320,6 +325,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvMatchTypeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
