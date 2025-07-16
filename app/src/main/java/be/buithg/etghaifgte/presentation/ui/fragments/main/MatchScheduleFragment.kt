@@ -17,7 +17,6 @@ import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
 import com.google.android.material.button.MaterialButton
 
