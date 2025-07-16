@@ -10,20 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import be.buithg.etghaifgte.R
-import be.buithg.etghaifgte.data.remote.RetrofitInstance
 import be.buithg.etghaifgte.databinding.FragmentMatchScheduleBinding
-import be.buithg.etghaifgte.domain.models.CricketData
 import be.buithg.etghaifgte.domain.models.Data
 import be.buithg.etghaifgte.presentation.ui.adapters.CricketAdapter
+import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
+import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.math.log
 
+@AndroidEntryPoint
 class MatchScheduleFragment : Fragment() {
 
     private lateinit var binding: FragmentMatchScheduleBinding
+    private val viewModel: MatchScheduleViewModel by viewModels()
     private lateinit var buttons: List<MaterialButton>
     private lateinit var adapter: CricketAdapter
 
@@ -38,20 +38,16 @@ class MatchScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        RetrofitInstance.api
-            .getLiveScore(apikey = "80112a77-1b12-4356-94a5-806e6db2dc64")
-            .enqueue(object : Callback<CricketData> {
-                override fun onResponse(call: Call<CricketData>, response: Response<CricketData>) {
-                    if (response.isSuccessful) {
-                        adapter = CricketAdapter(response.body()!!.data as ArrayList<Data>)
-                        binding.recyclerMatcher.adapter = adapter
-                    }
-                }
+        if (requireContext().isInternetAvailable()) {
+            viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+        } else {
+            Log.e("FFFF", "No Internet connection")
+        }
 
-                override fun onFailure(call: Call<CricketData>, t: Throwable) {
-                    Log.e("FFFF", "onFailure:${t.message} ", )
-                }
-            })
+        viewModel.matches.observe(viewLifecycleOwner) { list ->
+            adapter = CricketAdapter(ArrayList(list))
+            binding.recyclerMatcher.adapter = adapter
+        }
 
         buttons = listOf(
             binding.btnYesterday,
