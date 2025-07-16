@@ -44,6 +44,12 @@
                 android:layout_marginTop="4dp" />
 
             <!-- Прогноз -->
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="2dp">
+
             <TextView
                 android:id="@+id/textPrediction"
                 android:layout_width="wrap_content"
@@ -52,7 +58,9 @@
                 android:textColor="#CCCCCC"
                 android:textSize="14sp"
                 android:fontFamily="@font/montserrat_regular"
-                android:layout_marginTop="2dp" />
+                 />
+          </LinearLayout>
+
         </LinearLayout>
 
         <!-- Правый блок -->

@@ -5,27 +5,52 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.databinding.ItemHistoryPredictionBinding
-
+import be.buithg.etghaifgte.databinding.ItemPredictionBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 class PredictionsAdapter(
     private val items: List<PredictionEntity>
 ) : RecyclerView.Adapter<PredictionsAdapter.PredictionViewHolder>() {
 
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
     inner class PredictionViewHolder(
-        private val binding: ItemHistoryPredictionBinding
+        private val binding: ItemPredictionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: PredictionEntity) {
-            binding.textTime.text = item.dateTime
-            binding.textDate.text = ""
-            binding.textTeams.text = "${item.teamA}  ${item.teamB}"
-            binding.textPick.text = "Pick: ${item.pick}"
-            binding.textResult.text = ""
-            binding.btnViewDetails.text = ""
+            // 1) Try to parse the full ISO‑8601 date‑time string
+            val dt = runCatching { LocalDateTime.parse(item.dateTime) }.getOrNull()
+
+            // 2) Format separately for time and date, with a safe fallback
+            binding.textTime.text = dt?.format(timeFormatter) ?: item.dateTime
+            binding.textDate.text = dt?.format(dateFormatter) ?: item.dateTime
+
+            // 3) The rest of your fields
+            binding.textPrediction.text = item.pick // or "Pick: ${item.pick}"
+
+            binding.textTeams.text = "${item.teamA} - ${item.teamB}"
+
+            val result = when (item.wonMatches) {
+                1 -> if (item.pick == item.teamA) "Win" else "Lose"
+                2 -> if (item.pick == item.teamB) "Win" else "Lose"
+                else -> "Draw"
+            }
+            binding.textPrediction.text = "Your Pick: $result"
+
+            val imageRes = if (result == "Lose" || result =="Draw") {
+                be.buithg.etghaifgte.R.drawable.ic_check_red
+            } else {
+                be.buithg.etghaifgte.R.drawable.ic_check_green
+            }
+            binding.imageResult.setImageResource(imageRes)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PredictionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemHistoryPredictionBinding.inflate(inflater, parent, false)
+        val binding = ItemPredictionBinding.inflate(inflater, parent, false)
         return PredictionViewHolder(binding)
     }
 

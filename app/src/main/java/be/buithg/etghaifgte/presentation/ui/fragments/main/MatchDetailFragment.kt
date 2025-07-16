@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.DialogPredictWinnerBinding
 import be.buithg.etghaifgte.databinding.FragmentMatchDetailBinding
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.cardview.widget.CardView
+import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +44,12 @@ class MatchDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigateUp()
+            }
+        })
 
         val match = args.match
         bindMatch(match)
