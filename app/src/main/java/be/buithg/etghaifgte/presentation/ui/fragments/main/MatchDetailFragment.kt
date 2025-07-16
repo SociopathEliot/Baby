@@ -12,7 +12,7 @@ import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.DialogPredictWinnerBinding
 import be.buithg.etghaifgte.databinding.FragmentMatchDetailBinding
 import be.buithg.etghaifgte.domain.models.Data
-import androidx.core.os.bundleOf
+import androidx.navigation.fragment.navArgs
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.cardview.widget.CardView
@@ -26,14 +26,7 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class MatchDetailFragment : Fragment() {
 
-    companion object {
-        private const val ARG_MATCH = "arg_match"
-
-        fun newInstance(match: Data): MatchDetailFragment =
-            MatchDetailFragment().apply {
-                arguments = bundleOf(ARG_MATCH to match)
-            }
-    }
+    private val args: MatchDetailFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentMatchDetailBinding
     private val predictionsViewModel: PredictionsViewModel by viewModels()
@@ -50,8 +43,8 @@ class MatchDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val match = arguments?.getSerializable(ARG_MATCH) as? Data
-        match?.let { bindMatch(it) }
+        val match = args.match
+        bindMatch(match)
 
         binding.btnMakeForecast.setOnClickListener {
             val dialog = Dialog(requireContext())
@@ -62,8 +55,8 @@ class MatchDetailFragment : Fragment() {
 
             selectedTeam = null
 
-            val team1 = match?.teamInfo?.getOrNull(0)?.shortname ?: match?.teams?.getOrNull(0) ?: ""
-            val team2 = match?.teamInfo?.getOrNull(1)?.shortname ?: match?.teams?.getOrNull(1) ?: ""
+            val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
+            val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
             dialogBinding.teamAText.text = team1
             dialogBinding.teamBText.text = team2
 
@@ -96,7 +89,7 @@ class MatchDetailFragment : Fragment() {
                 val entity = PredictionEntity(
                     teamA = team1,
                     teamB = team2,
-                    dateTime = match?.dateTimeGMT ?: "",
+                    dateTime = match.dateTimeGMT,
                     pick = pick,
                     predicted = 1,
                     corrects = 0,

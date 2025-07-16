@@ -38,5 +38,9 @@
         android:id="@+id/matchDetailFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.MatchDetailFragment"
         android:label="fragment_match_detail"
-        tools:layout="@layout/fragment_match_detail" />
+        tools:layout="@layout/fragment_match_detail" >
+        <argument
+            android:name="match"
+            app:argType="be.buithg.etghaifgte.domain.models.Data" />
+    </fragment>
 </navigation>
