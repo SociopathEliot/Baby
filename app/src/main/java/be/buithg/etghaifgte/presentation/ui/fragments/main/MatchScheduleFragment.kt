@@ -17,7 +17,8 @@ import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-
+import com.google.android.material.button.MaterialButton
+import java.time.LocalDate
 import com.google.android.material.button.MaterialButton
 
 @AndroidEntryPoint
@@ -27,6 +28,8 @@ class MatchScheduleFragment : Fragment() {
     private val viewModel: MatchScheduleViewModel by viewModels()
     private lateinit var buttons: List<MaterialButton>
     private lateinit var adapter: CricketAdapter
+    private var allMatches: List<Data> = emptyList()
+    private var selectedBtn: MaterialButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,8 +49,8 @@ class MatchScheduleFragment : Fragment() {
         }
 
         viewModel.matches.observe(viewLifecycleOwner) { list ->
-            adapter = CricketAdapter(ArrayList(list))
-            binding.recyclerMatcher.adapter = adapter
+            allMatches = list
+            filterAndDisplay(selectedBtn ?: binding.btnToday)
 
         }
 
@@ -59,11 +62,14 @@ class MatchScheduleFragment : Fragment() {
 
         buttons.forEach { button ->
             button.setOnClickListener {
+                selectedBtn = button
                 updateSelection(button)
+                filterAndDisplay(button)
             }
         }
 
         // по умолчанию — Today выбран
+        selectedBtn = binding.btnToday
         updateSelection(binding.btnToday)
     }
     private fun updateSelection(selectedButton: MaterialButton) {
@@ -95,5 +101,18 @@ class MatchScheduleFragment : Fragment() {
                 start()
             }
         }
+    }
+
+    private fun filterAndDisplay(button: MaterialButton) {
+        val selectedDate = when (button.id) {
+            R.id.btnYesterday -> LocalDate.now().minusDays(1)
+            R.id.btnTomorrow -> LocalDate.now().plusDays(1)
+            else -> LocalDate.now()
+        }
+        val filtered = allMatches.filter {
+            runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
+        }
+        adapter = CricketAdapter(ArrayList(filtered))
+        binding.recyclerMatcher.adapter = adapter
     }
 }
