@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
+import com.google.android.material.button.MaterialButton
 
 @AndroidEntryPoint
 class MatchScheduleFragment : Fragment() {
@@ -50,6 +51,7 @@ class MatchScheduleFragment : Fragment() {
         viewModel.matches.observe(viewLifecycleOwner) { list ->
             allMatches = list
             filterAndDisplay(selectedBtn ?: binding.btnToday)
+
         }
 
         buttons = listOf(
