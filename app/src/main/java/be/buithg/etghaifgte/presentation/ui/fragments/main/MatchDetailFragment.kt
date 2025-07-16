@@ -79,6 +79,7 @@ class MatchDetailFragment : Fragment() {
         val team1 = teams.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
         val team2 = teams.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
         binding.teamTitle.text = "$team1  $team2"
+
         binding.statusText.text = match.status
 
         val venueParts = match.venue.split(",").map { it.trim() }

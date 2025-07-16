@@ -1,5 +1,6 @@
 package be.buithg.etghaifgte.presentation.ui.adapters
 
+import android.graphics.ColorSpace.match
 import be.buithg.etghaifgte.databinding.MatchItemBinding
 import be.buithg.etghaifgte.domain.models.Data
 
@@ -7,7 +8,13 @@ import be.buithg.etghaifgte.domain.models.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+    class CricketAdapter(
+        private val items: ArrayList<Data>,
+        private val onItemClick: (Data) -> Unit
+    ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
     class CricketAdapter(
         private val items: ArrayList<Data>,
@@ -27,7 +34,6 @@ import com.bumptech.glide.Glide
         override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: CricketViewHolder, position: Int) {
-            // здесь можно вызвать holder.bind(items[position])
             val currentitem = items[position]
             holder.bind(currentitem)
             holder.itemView.setOnClickListener { onItemClick(currentitem) }
@@ -48,6 +54,10 @@ import com.bumptech.glide.Glide
                 binding.tvTime.text = item.dateTimeGMT
                 binding.tvLeague.text = item.venue
                 binding.tvStatus.text = item.status.truncate(15)
+
+
+                val country = teams.getOrNull(0)?.name ?: item.teams.getOrNull(0) ?: ""
+                binding.tvLeague.text = country
 
             }
 
