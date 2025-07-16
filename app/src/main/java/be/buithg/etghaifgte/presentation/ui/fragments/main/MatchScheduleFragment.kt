@@ -117,7 +117,9 @@ class MatchScheduleFragment : Fragment() {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
-            parentFragmentManager.launchNewFragmentWithNew(MatchDetailFragment.newInstance(match))
+            requireActivity().supportFragmentManager.launchNewFragment(
+                MatchDetailFragment.newInstance(match)
+            )
         }
 
         binding.recyclerMatcher.adapter = adapter
