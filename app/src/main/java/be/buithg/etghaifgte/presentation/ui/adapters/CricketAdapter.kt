@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class CricketAdapter(private val items: ArrayList<Data>) :
-        RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
+    class CricketAdapter(
+        private val items: ArrayList<Data>,
+        private val onItemClick: (Data) -> Unit
+    ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
             val inflater = LayoutInflater.from(parent.context)
@@ -28,6 +31,7 @@ class CricketAdapter(private val items: ArrayList<Data>) :
         override fun onBindViewHolder(holder: CricketViewHolder, position: Int) {
             val currentitem = items[position]
             holder.bind(currentitem)
+            holder.itemView.setOnClickListener { onItemClick(currentitem) }
         }
 
         inner class CricketViewHolder(

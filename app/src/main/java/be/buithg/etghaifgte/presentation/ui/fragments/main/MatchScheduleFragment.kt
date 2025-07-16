@@ -14,11 +14,12 @@ import be.buithg.etghaifgte.databinding.FragmentMatchScheduleBinding
 import be.buithg.etghaifgte.domain.models.Data
 import be.buithg.etghaifgte.presentation.ui.adapters.CricketAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
-import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
+import be.buithg.etghaifgte.utils.Constants.launchNewFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 import com.google.android.material.button.MaterialButton
+import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchDetailFragment
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class MatchScheduleFragment : Fragment() {
@@ -111,7 +112,10 @@ class MatchScheduleFragment : Fragment() {
         val filtered = allMatches.filter {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }
-        adapter = CricketAdapter(ArrayList(filtered))
+        adapter = CricketAdapter(ArrayList(filtered)) { match ->
+            parentFragmentManager.launchNewFragment(MatchDetailFragment.newInstance(match))
+        }
+
         binding.recyclerMatcher.adapter = adapter
     }
 }
