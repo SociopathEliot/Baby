@@ -15,6 +15,7 @@ import be.buithg.etghaifgte.databinding.FragmentMatchScheduleBinding
 import be.buithg.etghaifgte.domain.models.CricketData
 import be.buithg.etghaifgte.domain.models.Data
 import be.buithg.etghaifgte.presentation.ui.adapters.CricketAdapter
+import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,20 +39,24 @@ class MatchScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        RetrofitInstance.api
-            .getLiveScore(apikey = "80112a77-1b12-4356-94a5-806e6db2dc64")
-            .enqueue(object : Callback<CricketData> {
-                override fun onResponse(call: Call<CricketData>, response: Response<CricketData>) {
-                    if (response.isSuccessful) {
-                        adapter = CricketAdapter(response.body()!!.data as ArrayList<Data>)
-                        binding.recyclerMatcher.adapter = adapter
+        if (requireContext().isInternetAvailable()) {
+            RetrofitInstance.api
+                .getLiveScore(apikey = "80112a77-1b12-4356-94a5-806e6db2dc64")
+                .enqueue(object : Callback<CricketData> {
+                    override fun onResponse(call: Call<CricketData>, response: Response<CricketData>) {
+                        if (response.isSuccessful) {
+                            adapter = CricketAdapter(response.body()!!.data as ArrayList<Data>)
+                            binding.recyclerMatcher.adapter = adapter
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<CricketData>, t: Throwable) {
-                    Log.e("FFFF", "onFailure:${t.message} ", )
-                }
-            })
+                    override fun onFailure(call: Call<CricketData>, t: Throwable) {
+                        Log.e("FFFF", "onFailure:${'$'}{t.message} ")
+                    }
+                })
+        } else {
+            Log.e("FFFF", "No Internet connection")
+        }
 
         buttons = listOf(
             binding.btnYesterday,
