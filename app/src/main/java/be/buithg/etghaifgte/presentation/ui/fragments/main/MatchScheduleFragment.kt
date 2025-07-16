@@ -19,7 +19,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
 import androidx.navigation.fragment.findNavController
-import androidx.core.os.bundleOf
+import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragmentDirections
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 
 import java.time.LocalDate
@@ -116,8 +116,9 @@ class MatchScheduleFragment : Fragment() {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
-            val bundle = bundleOf("arg_match" to match)
-            findNavController().navigate(R.id.matchDetailFragment, bundle)
+            val action =
+                MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(match)
+            findNavController().navigate(action)
         }
 
         binding.recyclerMatcher.adapter = adapter
