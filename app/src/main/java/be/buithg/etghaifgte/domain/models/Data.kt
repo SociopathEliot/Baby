@@ -1,5 +1,7 @@
 package be.buithg.etghaifgte.domain.models
 
+import java.io.Serializable
+
 data class Data(
     val bbbEnabled: Boolean,
     val date: String,
@@ -17,4 +19,4 @@ data class Data(
     val teamInfo: List<TeamInfo>,
     val teams: List<String>,
     val venue: String
-)
+): Serializable
