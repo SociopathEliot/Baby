@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-    class CricketAdapter(private val items: ArrayList<Data>) :
-        RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
+    class CricketAdapter(
+        private val items: ArrayList<Data>,
+        private val onItemClick: (Data) -> Unit
+    ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
             val inflater = LayoutInflater.from(parent.context)
@@ -28,6 +30,7 @@ import com.bumptech.glide.Glide
             // здесь можно вызвать holder.bind(items[position])
             val currentitem = items[position]
             holder.bind(currentitem)
+            holder.itemView.setOnClickListener { onItemClick(currentitem) }
         }
 
         inner class CricketViewHolder(
@@ -35,12 +38,20 @@ import com.bumptech.glide.Glide
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
-//                binding.tvTeams1.text = item.teams.get(1)
+                // Display team short names if available, fall back to team list
+                val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
+                val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
+
+                binding.tvTeams1.text = team1.truncate(12)
+                binding.tvTeams2.text = team2.truncate(12)
 
                 binding.tvTime.text = item.dateTimeGMT
                 binding.tvLeague.text = item.venue
-                binding.tvStatus.text = item.status
+                binding.tvStatus.text = item.status.truncate(15)
 
             }
+
+            private fun String.truncate(max: Int): String =
+                if (length > max) take(max) + "…" else this
         }
     }
