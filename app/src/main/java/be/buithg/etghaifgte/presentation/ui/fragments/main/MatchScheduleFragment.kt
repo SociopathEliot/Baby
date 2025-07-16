@@ -20,6 +20,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
 import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchDetailFragment
+import be.buithg.etghaifgte.utils.Constants.launchNewFragmentWithNew
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 
 import java.time.LocalDate
@@ -116,7 +117,7 @@ class MatchScheduleFragment : Fragment() {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
-            parentFragmentManager.launchNewFragment(MatchDetailFragment.newInstance(match))
+            parentFragmentManager.launchNewFragmentWithNew(MatchDetailFragment.newInstance(match))
         }
 
         binding.recyclerMatcher.adapter = adapter
