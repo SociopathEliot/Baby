@@ -16,6 +16,10 @@ import java.time.format.DateTimeFormatter
         private val onItemClick: (Data) -> Unit
     ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
+    class CricketAdapter(
+        private val items: ArrayList<Data>,
+        private val onItemClick: (Data) -> Unit
+    ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
             val inflater = LayoutInflater.from(parent.context)
@@ -40,24 +44,24 @@ import java.time.format.DateTimeFormatter
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
-                val teams = item.teamInfo
-
                 // Display team short names if available, fall back to team list
                 val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
                 val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
-                binding.tvTeams1.text = team1
 
-                binding.tvTeams2.text = team2
+                binding.tvTeams1.text = team1.truncate(12)
+                binding.tvTeams2.text = team2.truncate(12)
 
                 binding.tvTime.text = item.dateTimeGMT
-                val ldt = LocalDateTime.parse(item.dateTimeGMT)
-                val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-                binding.tvTime.text = ldt.format(timeFormatter)
-                binding.tvStatus.text = item.status
+                binding.tvLeague.text = item.venue
+                binding.tvStatus.text = item.status.truncate(15)
+
 
                 val country = teams.getOrNull(0)?.name ?: item.teams.getOrNull(0) ?: ""
                 binding.tvLeague.text = country
 
             }
+
+            private fun String.truncate(max: Int): String =
+                if (length > max) take(max) + "…" else this
         }
     }
