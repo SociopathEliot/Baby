@@ -35,7 +35,11 @@ import com.bumptech.glide.Glide
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
-//                binding.tvTeams1.text = item.teams.get(1)
+                // Display team short names if available, fall back to team list
+                val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
+                val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
+                binding.tvTeams1.text = team1
+                binding.tvTeams2.text = team2
 
                 binding.tvTime.text = item.dateTimeGMT
                 binding.tvLeague.text = item.venue
