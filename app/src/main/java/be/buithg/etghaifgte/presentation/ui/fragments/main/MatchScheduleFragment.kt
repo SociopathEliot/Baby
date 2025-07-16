@@ -47,6 +47,7 @@ class MatchScheduleFragment : Fragment() {
                         if (response.isSuccessful) {
                             adapter = CricketAdapter(response.body()!!.data as ArrayList<Data>)
                             binding.recyclerMatcher.adapter = adapter
+                            Log.e("FKDJFSL", "onFailure:${response.isSuccessful} ")
                         }
                     }
 

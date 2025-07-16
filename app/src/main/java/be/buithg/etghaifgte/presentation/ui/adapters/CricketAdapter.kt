@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-    class CricketAdapter(private val items: ArrayList<Data>) :
+class CricketAdapter(private val items: ArrayList<Data>) :
         RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
@@ -35,12 +37,15 @@ import com.bumptech.glide.Glide
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
-                binding.tvTeams1.text = item.teamInfo.get(0).name
-                binding.tvTeams2.text = item.teamInfo.get(1).name
-                binding.tvTime.text = item.dateTimeGMT
-                binding.tvLeague.text = item.venue
+                val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
+                val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
+                binding.tvTeams1.text = "$team1 - "
+                binding.tvTeams2.text = team2
+                val ldt = LocalDateTime.parse(item.dateTimeGMT)
+                val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+                binding.tvTime.text = ldt.format(timeFormatter)
+//                binding.tvLeague.text = item.venue
                 binding.tvStatus.text = item.status
-
             }
         }
     }
