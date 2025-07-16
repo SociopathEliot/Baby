@@ -20,6 +20,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.button.MaterialButton
 import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchDetailFragment
+import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 
 import java.time.LocalDate
 
