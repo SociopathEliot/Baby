@@ -1,5 +1,6 @@
 package be.buithg.etghaifgte.presentation.ui.adapters
 
+import android.graphics.ColorSpace.match
 import be.buithg.etghaifgte.databinding.MatchItemBinding
 import be.buithg.etghaifgte.domain.models.Data
 
@@ -39,6 +40,8 @@ import java.time.format.DateTimeFormatter
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
+                val teams = item.teamInfo
+
                 // Display team short names if available, fall back to team list
                 val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
                 val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
@@ -51,6 +54,10 @@ import java.time.format.DateTimeFormatter
                 val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
                 binding.tvTime.text = ldt.format(timeFormatter)
                 binding.tvStatus.text = item.status
+
+                val country = teams.getOrNull(0)?.name ?: item.teams.getOrNull(0) ?: ""
+                binding.tvLeague.text = country
+
             }
         }
     }

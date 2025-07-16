@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
@@ -55,8 +56,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:gravity="center"
                 android:text="Team A  Team B"
+                android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -87,7 +88,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMakeForecast"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#FFCE01"
