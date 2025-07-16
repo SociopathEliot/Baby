@@ -63,6 +63,7 @@
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:id="@+id/teamAText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gladiators Cricket"
@@ -100,6 +101,7 @@
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:id="@+id/teamBText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fairy Game"

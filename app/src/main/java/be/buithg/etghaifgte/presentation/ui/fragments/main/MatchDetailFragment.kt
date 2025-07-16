@@ -13,10 +13,15 @@ import be.buithg.etghaifgte.databinding.DialogPredictWinnerBinding
 import be.buithg.etghaifgte.databinding.FragmentMatchDetailBinding
 import be.buithg.etghaifgte.domain.models.Data
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import be.buithg.etghaifgte.data.local.entity.PredictionEntity
+import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@AndroidEntryPoint
 class MatchDetailFragment : Fragment() {
 
     companion object {
@@ -29,6 +34,8 @@ class MatchDetailFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentMatchDetailBinding
+    private val predictionsViewModel: PredictionsViewModel by viewModels()
+    private var selectedTeam: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,12 +58,30 @@ class MatchDetailFragment : Fragment() {
 
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+            val team1 = match?.teamInfo?.getOrNull(0)?.shortname ?: match?.teams?.getOrNull(0) ?: ""
+            val team2 = match?.teamInfo?.getOrNull(1)?.shortname ?: match?.teams?.getOrNull(1) ?: ""
+            dialogBinding.teamAText.text = team1
+            dialogBinding.teamBText.text = team2
+            dialogBinding.cardTeamA.setOnClickListener { selectedTeam = team1 }
+            dialogBinding.cardTeamB.setOnClickListener { selectedTeam = team2 }
+
             dialogBinding.btnClose.setOnClickListener {
                 dialog.dismiss()
             }
 
             dialogBinding.btnSubmit.setOnClickListener {
-                // TODO: handle submit logic here
+                val pick = selectedTeam ?: return@setOnClickListener
+                val entity = PredictionEntity(
+                    teamA = team1,
+                    teamB = team2,
+                    dateTime = match?.dateTimeGMT ?: "",
+                    pick = pick,
+                    predicted = 1,
+                    corrects = 0,
+                    upcoming = 1,
+                    wonMatches = 0
+                )
+                predictionsViewModel.addPrediction(entity)
                 dialog.dismiss()
             }
 
