@@ -14,7 +14,6 @@ import be.buithg.etghaifgte.databinding.FragmentMatchScheduleBinding
 import be.buithg.etghaifgte.domain.models.Data
 import be.buithg.etghaifgte.presentation.ui.adapters.CricketAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
-import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import be.buithg.etghaifgte.utils.Constants.launchNewFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +51,7 @@ class MatchScheduleFragment : Fragment() {
         viewModel.matches.observe(viewLifecycleOwner) { list ->
             allMatches = list
             filterAndDisplay(selectedBtn ?: binding.btnToday)
+
         }
 
         buttons = listOf(
@@ -115,6 +115,7 @@ class MatchScheduleFragment : Fragment() {
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             parentFragmentManager.launchNewFragment(MatchDetailFragment.newInstance(match))
         }
+
         binding.recyclerMatcher.adapter = adapter
     }
 }

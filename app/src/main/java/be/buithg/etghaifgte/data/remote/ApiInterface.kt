@@ -9,4 +9,5 @@ interface ApiInterface {
     @GET("currentMatches")
     suspend fun getLiveScore(@Query("apikey") apikey :String) : CricketData
 
+
 }

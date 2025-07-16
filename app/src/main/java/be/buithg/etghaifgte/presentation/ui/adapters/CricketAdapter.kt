@@ -7,12 +7,14 @@ import be.buithg.etghaifgte.domain.models.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
     class CricketAdapter(
         private val items: ArrayList<Data>,
         private val onItemClick: (Data) -> Unit
     ) : RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
+
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
             val inflater = LayoutInflater.from(parent.context)
@@ -27,7 +29,6 @@ import com.bumptech.glide.Glide
         override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: CricketViewHolder, position: Int) {
-            // здесь можно вызвать holder.bind(items[position])
             val currentitem = items[position]
             holder.bind(currentitem)
             holder.itemView.setOnClickListener { onItemClick(currentitem) }
@@ -42,12 +43,14 @@ import com.bumptech.glide.Glide
                 val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
                 val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
                 binding.tvTeams1.text = team1
+
                 binding.tvTeams2.text = team2
 
                 binding.tvTime.text = item.dateTimeGMT
-                binding.tvLeague.text = item.venue
+                val ldt = LocalDateTime.parse(item.dateTimeGMT)
+                val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+                binding.tvTime.text = ldt.format(timeFormatter)
                 binding.tvStatus.text = item.status
-
             }
         }
     }
