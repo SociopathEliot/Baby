@@ -35,8 +35,8 @@ import com.bumptech.glide.Glide
         ) : RecyclerView.ViewHolder(binding.root) {
 
             fun bind(item: Data) {
-//                binding.tvTeams1.text = item.teams.get(1)
-
+                binding.tvTeams1.text = item.teamInfo.get(0).name
+                binding.tvTeams2.text = item.teamInfo.get(1).name
                 binding.tvTime.text = item.dateTimeGMT
                 binding.tvLeague.text = item.venue
                 binding.tvStatus.text = item.status

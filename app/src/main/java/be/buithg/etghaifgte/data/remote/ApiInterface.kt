@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
-    @GET("currentMatches")
+    @GET("matches")
     fun getLiveScore(@Query("apikey") apikey :String) : Call<CricketData>
 
 }
