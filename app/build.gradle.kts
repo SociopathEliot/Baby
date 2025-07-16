@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-//    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt.android)
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -60,9 +60,11 @@ dependencies {
     // Room compiler via KSP
     ksp("androidx.room:room-compiler:$room_version")
 
-    // Hilt still uses KAPT
-//    implementation("com.google.dagger:hilt-android:2.56.2")
-//    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
 
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
