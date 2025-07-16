@@ -17,6 +17,7 @@ import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+
 import com.google.android.material.button.MaterialButton
 
 @AndroidEntryPoint
@@ -47,6 +48,7 @@ class MatchScheduleFragment : Fragment() {
         viewModel.matches.observe(viewLifecycleOwner) { list ->
             adapter = CricketAdapter(ArrayList(list))
             binding.recyclerMatcher.adapter = adapter
+
         }
 
         buttons = listOf(

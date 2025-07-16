@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-    class CricketAdapter(private val items: ArrayList<Data>) :
+class CricketAdapter(private val items: ArrayList<Data>) :
         RecyclerView.Adapter<CricketAdapter.CricketViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
@@ -43,8 +45,8 @@ import com.bumptech.glide.Glide
 
                 binding.tvTime.text = item.dateTimeGMT
                 binding.tvLeague.text = item.venue
-                binding.tvStatus.text = item.status
 
+                binding.tvStatus.text = item.status
             }
         }
     }
