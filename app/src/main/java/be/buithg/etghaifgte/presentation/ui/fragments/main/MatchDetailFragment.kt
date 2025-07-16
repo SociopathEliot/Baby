@@ -13,7 +13,9 @@ import be.buithg.etghaifgte.databinding.DialogPredictWinnerBinding
 import be.buithg.etghaifgte.databinding.FragmentMatchDetailBinding
 import be.buithg.etghaifgte.domain.models.Data
 import androidx.core.os.bundleOf
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.cardview.widget.CardView
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,12 +60,32 @@ class MatchDetailFragment : Fragment() {
 
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+            selectedTeam = null
+
             val team1 = match?.teamInfo?.getOrNull(0)?.shortname ?: match?.teams?.getOrNull(0) ?: ""
             val team2 = match?.teamInfo?.getOrNull(1)?.shortname ?: match?.teams?.getOrNull(1) ?: ""
             dialogBinding.teamAText.text = team1
             dialogBinding.teamBText.text = team2
-            dialogBinding.cardTeamA.setOnClickListener { selectedTeam = team1 }
-            dialogBinding.cardTeamB.setOnClickListener { selectedTeam = team2 }
+
+            dialogBinding.cardTeamA.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+            dialogBinding.cardTeamB.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+            fun highlightSelection(selectedCard: CardView, otherCard: CardView) {
+                val yellow = ContextCompat.getColor(requireContext(), R.color.yellow)
+                val white = ContextCompat.getColor(requireContext(), R.color.white)
+                selectedCard.setCardBackgroundColor(yellow)
+                otherCard.setCardBackgroundColor(white)
+            }
+
+            dialogBinding.cardTeamA.setOnClickListener {
+                selectedTeam = team1
+                highlightSelection(dialogBinding.cardTeamA, dialogBinding.cardTeamB)
+            }
+
+            dialogBinding.cardTeamB.setOnClickListener {
+                selectedTeam = team2
+                highlightSelection(dialogBinding.cardTeamB, dialogBinding.cardTeamA)
+            }
 
             dialogBinding.btnClose.setOnClickListener {
                 dialog.dismiss()
