@@ -32,19 +32,24 @@ class PredictionsAdapter(
 
             binding.textTeams.text = "${item.teamA} - ${item.teamB}"
 
-            val result = when (item.wonMatches) {
-                1 -> if (item.pick == item.teamA) "Win" else "Lose"
-                2 -> if (item.pick == item.teamB) "Win" else "Lose"
-                else -> "Draw"
-            }
-            binding.textPrediction.text = "Your Pick: $result"
-
-            val imageRes = if (result == "Lose" || result =="Draw") {
-                be.buithg.etghaifgte.R.drawable.ic_check_red
+            if (item.upcoming == 1) {
+                binding.textPrediction.text = "Upcoming"
+                binding.imageResult.setImageResource(be.buithg.etghaifgte.R.drawable.icon_upcoming)
             } else {
-                be.buithg.etghaifgte.R.drawable.ic_check_green
+                val result = when (item.wonMatches) {
+                    1 -> if (item.pick == item.teamA) "Win" else "Lose"
+                    2 -> if (item.pick == item.teamB) "Win" else "Lose"
+                    else -> "Draw"
+                }
+                binding.textPrediction.text = "Your Pick: ${item.pick} - $result"
+
+                val imageRes = if (result == "Lose") {
+                    be.buithg.etghaifgte.R.drawable.ic_check_red
+                } else {
+                    be.buithg.etghaifgte.R.drawable.ic_check_green
+                }
+                binding.imageResult.setImageResource(imageRes)
             }
-            binding.imageResult.setImageResource(imageRes)
         }
     }
 

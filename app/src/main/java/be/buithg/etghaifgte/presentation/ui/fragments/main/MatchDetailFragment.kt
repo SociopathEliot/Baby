@@ -28,6 +28,25 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class MatchDetailFragment : Fragment() {
 
+    private fun winnerTeam(match: Data): Int {
+        val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
+        val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+
+        if (match.score.size >= 2) {
+            val score1 = match.score[0].r
+            val score2 = match.score[1].r
+            if (score1 > score2) return 1
+            if (score2 > score1) return 2
+        }
+
+        val status = match.status.lowercase()
+        return when {
+            status.contains(team1.lowercase()) -> 1
+            status.contains(team2.lowercase()) -> 2
+            status.contains("draw") -> 0
+            else -> 0
+        }
+    }
     private val args: MatchDetailFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentMatchDetailBinding
@@ -94,6 +113,10 @@ class MatchDetailFragment : Fragment() {
 
             dialogBinding.btnSubmit.setOnClickListener {
                 val pick = selectedTeam ?: return@setOnClickListener
+
+                val upcoming = if (match.matchEnded) 0 else 1
+                val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
+
                 val entity = PredictionEntity(
                     teamA = team1,
                     teamB = team2,
@@ -101,8 +124,9 @@ class MatchDetailFragment : Fragment() {
                     pick = pick,
                     predicted = 1,
                     corrects = 0,
-                    upcoming = 1,
-                    wonMatches = 0
+                    upcoming = upcoming,
+                    wonMatches = wonMatches
+
                 )
                 predictionsViewModel.addPrediction(entity)
                 dialog.dismiss()
