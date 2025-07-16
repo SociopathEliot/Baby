@@ -118,6 +118,7 @@ class MatchScheduleFragment : Fragment() {
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val bundle = bundleOf("arg_match" to match)
             findNavController().navigate(R.id.matchDetailFragment, bundle)
+
         }
 
         binding.recyclerMatcher.adapter = adapter
