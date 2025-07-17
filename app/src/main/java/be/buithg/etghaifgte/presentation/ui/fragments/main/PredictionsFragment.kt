@@ -36,6 +36,10 @@ class PredictionsFragment : Fragment() {
             }
         })
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         viewModel.predictions.observe(viewLifecycleOwner) {
             binding.recyclerView.apply {
                 adapter = PredictionsAdapter(it)

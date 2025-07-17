@@ -45,6 +45,10 @@ class PredictionHistoryFragment : Fragment() {
             }
         })
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         buttons = listOf(binding.btnYesterday, binding.btnToday, binding.btnTomorrow)
 
         val filterMap = mapOf(

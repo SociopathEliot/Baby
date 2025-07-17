@@ -53,6 +53,10 @@ class MatchScheduleFragment : Fragment() {
             Log.e("FFFF", "No Internet connection")
         }
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         viewModel.matches.observe(viewLifecycleOwner) { list ->
             allMatches = list
             filterAndDisplay(selectedBtn ?: binding.btnToday)

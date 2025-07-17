@@ -70,6 +70,10 @@ class MatchDetailFragment : Fragment() {
             }
         })
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         val match = args.match
         bindMatch(match)
 

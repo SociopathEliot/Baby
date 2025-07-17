@@ -84,6 +84,10 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 findNavController().navigate(R.id.matchScheduleFragment)
             }
         })
+
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             updateSummary(list)
             setupAccuracyChart(list)

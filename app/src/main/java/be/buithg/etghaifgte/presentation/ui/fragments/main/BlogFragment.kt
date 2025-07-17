@@ -253,6 +253,10 @@ your financial situation.
                 findNavController().navigate(R.id.matchScheduleFragment)
             }
         })
+
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
         val cardViews = listOf(
             binding.cardItem1,
             binding.cardItem2,
