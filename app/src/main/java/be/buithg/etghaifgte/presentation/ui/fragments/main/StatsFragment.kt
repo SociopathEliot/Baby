@@ -8,6 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.FragmentStatsBinding
+import androidx.fragment.app.viewModels
+import be.buithg.etghaifgte.data.local.entity.PredictionEntity
+import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Month
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
@@ -15,10 +22,49 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
+@AndroidEntryPoint
 class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     private var _binding: FragmentStatsBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: PredictionsViewModel by viewModels()
+
+    private fun isWin(item: PredictionEntity): Boolean {
+        return when (item.wonMatches) {
+            1 -> item.pick == item.teamA
+            2 -> item.pick == item.teamB
+            else -> false
+        }
+    }
+
+    private fun updateSummary(list: List<PredictionEntity>) {
+        val predicted = list.size
+        val wins = list.count { isWin(it) }
+        val accuracy = if (predicted > 0) (wins * 100 / predicted) else 0
+
+        binding.predictionsText.text = predicted.toString()
+        binding.winsText.text = wins.toString()
+        binding.accuracyText.text = "$accuracy%"
+
+        val now = LocalDate.now()
+        val prev = now.minusMonths(1)
+
+        fun monthAcc(y: Int, m: Int): Int {
+            val monthList = list.filter {
+                runCatching { LocalDateTime.parse(it.dateTime) }.getOrNull()?.let { dt ->
+                    dt.year == y && dt.monthValue == m
+                } ?: false
+            }
+            val w = monthList.count { isWin(it) }
+            return if (monthList.isNotEmpty()) (w * 100 / monthList.size) else 0
+        }
+
+        val prevAcc = monthAcc(prev.year, prev.monthValue)
+        val currAcc = monthAcc(now.year, now.monthValue)
+
+        binding.lastMonthsText.text = "Last Month: ${prevAcc}%"
+        binding.thisMonthsText.text = "This Month: ${currAcc}%"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,11 +77,15 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAccuracyChart()     // PieChart
-        setupLineChart()         // LineChart
+        viewModel.predictions.observe(viewLifecycleOwner) { list ->
+            updateSummary(list)
+            setupAccuracyChart(list)
+            setupLineChart(list)
+        }
+        viewModel.loadPredictions()
     }
 
-    private fun setupAccuracyChart() {
+    private fun setupAccuracyChart(data: List<PredictionEntity>) {
         val chart = binding.pieChart
         chart.apply {
             description.isEnabled = false
@@ -48,7 +98,11 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             transparentCircleRadius = 0f
             setDrawRoundedSlices(true)
         }
-        val entries = listOf(PieEntry(30f), PieEntry(40f), PieEntry(30f))
+        val correct = data.count { isWin(it) }.toFloat()
+        val incorrect = data.count { it.upcoming == 0 && !isWin(it) }.toFloat()
+        val pending = data.count { it.upcoming == 1 }.toFloat()
+
+        val entries = listOf(PieEntry(correct), PieEntry(incorrect), PieEntry(pending))
         val ds = PieDataSet(entries, "").apply {
             colors = listOf(
                 Color.parseColor("#FF4E4E"),
@@ -62,7 +116,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         chart.invalidate()
     }
 
-    private fun setupLineChart() {
+    private fun setupLineChart(data: List<PredictionEntity>) {
         val chart = binding.lineChart
 
         // 1. Базовые
@@ -77,12 +131,14 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
 
         // 2. Ось X
-        val months = listOf("JAN","FEB","MAR","APR","MAY","SEP")
+        val parsed = data.mapNotNull { runCatching { LocalDateTime.parse(it.dateTime) }.getOrNull() }
+        val monthsSet = parsed.map { it.monthValue }.distinct().sorted()
+        val months = monthsSet.map { Month.of(it).name.take(3) }
         chart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             textColor = Color.parseColor("#AAAAAA")
             textSize = 10f
-            setDrawAxisLine(true)            // рисуем линию оси
+            setDrawAxisLine(true)
             setDrawGridLines(true)
             enableGridDashedLine(10f, 10f, 0f)
             valueFormatter = IndexAxisValueFormatter(months)
@@ -124,17 +180,27 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             }
         }
 
-        val data2021 = listOf(25f,58f,57f,70f,12f,95f)
-        val data2022 = listOf(50f,35f,80f,55f,40f,45f)
-        val data2023 = listOf(40f,90f,85f,83f,65f,92f)
-        val data2024 = listOf(55f,10f,35f,58f,90f,15f)
+        fun monthAcc(year: Int, month: Int): Float {
+            val monthData = data.filter {
+                runCatching { LocalDateTime.parse(it.dateTime) }.getOrNull()?.let { dt ->
+                    dt.year == year && dt.monthValue == month
+                } ?: false
+            }
+            val wins = monthData.count { isWin(it) }
+            return if (monthData.isNotEmpty()) wins * 100f / monthData.size else 0f
+        }
 
-        val sets = listOf(
-            makeSet(data2021, Color.parseColor("#007AFF")),
-            makeSet(data2022, Color.parseColor("#4CD964")),
-            makeSet(data2023, Color.parseColor("#FF9500")),
-            makeSet(data2024, Color.parseColor("#32D3F2"))
+        val colorMap = mapOf(
+            2021 to Color.parseColor("#007AFF"),
+            2022 to Color.parseColor("#4CD964"),
+            2023 to Color.parseColor("#FF9500"),
+            2024 to Color.parseColor("#32D3F2")
         )
+
+        val sets = listOf(2021, 2022, 2023, 2024).map { year ->
+            val values = monthsSet.map { monthAcc(year, it) }
+            makeSet(values, colorMap[year] ?: Color.WHITE)
+        }
 
         chart.data = LineData(sets)
         chart.legend.apply {
