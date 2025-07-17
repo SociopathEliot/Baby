@@ -62,4 +62,10 @@
             android:name="match"
             app:argType="be.buithg.etghaifgte.domain.models.Data" />
     </fragment>
+
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.TutorialFragment"
+        android:label="fragment_tutorial"
+        tools:layout="@layout/fragment_tutorial" />
 </navigation>

@@ -51,6 +51,10 @@ class AchievementsFragment : Fragment() {
             }
         })
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             updateAchievements(list)
         }

@@ -34,6 +34,10 @@ class BlogDetailFragment : Fragment() {
             }
         })
 
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
+
         binding.itemTitle.text = args.title
         binding.articleText.text = args.text
         binding.itemImage.setImageResource(args.imageRes)

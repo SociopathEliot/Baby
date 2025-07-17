@@ -30,6 +30,10 @@ class TutorialFragment : Fragment() {
                 findNavController().navigateUp()
             }
         })
+
+        binding.btnHelp.setOnClickListener {
+            findNavController().navigate(R.id.tutorialFragment)
+        }
     }
 
 }
