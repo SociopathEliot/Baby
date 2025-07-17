@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import be.buithg.etghaifgte.R
 import androidx.fragment.app.viewModels
 import androidx.core.content.edit
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import be.buithg.etghaifgte.databinding.FragmentAchievementsBinding
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
@@ -42,6 +44,13 @@ class AchievementsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.matchScheduleFragment)
+            }
+        })
+
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             updateAchievements(list)
         }

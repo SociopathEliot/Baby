@@ -70,9 +70,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/offline_mode_button"
                 android:layout_width="200dp"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@android:color/transparent"
+                android:backgroundTint="@color/yellow"
                 android:text="Continue offline"
                 android:textColor="@color/white"
                 android:textSize="20sp"

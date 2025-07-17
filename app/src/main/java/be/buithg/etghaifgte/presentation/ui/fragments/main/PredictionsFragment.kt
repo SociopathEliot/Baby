@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import be.buithg.etghaifgte.R
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.databinding.FragmentPredictionsBinding
 import be.buithg.etghaifgte.presentation.ui.adapters.PredictionsAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
@@ -27,6 +29,13 @@ class PredictionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.matchScheduleFragment)
+            }
+        })
+
         viewModel.predictions.observe(viewLifecycleOwner) {
             binding.recyclerView.apply {
                 adapter = PredictionsAdapter(it)

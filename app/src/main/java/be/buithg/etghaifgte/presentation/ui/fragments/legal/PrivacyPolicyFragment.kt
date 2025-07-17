@@ -39,7 +39,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import be.buithg.etghaifgte.databinding.FragmentPrivacyPolicyBinding
-import be.buithg.etghaifgte.databinding.NoInternetConnectionLayoutBinding
+import be.buithg.etghaifgte.databinding.NetworkErrorLayoutBinding
 import be.buithg.etghaifgte.presentation.ui.fragments.main.HomeFragment
 import be.buithg.etghaifgte.presentation.ui.fragments.onboarding.WelcomeFragment
 import be.buithg.etghaifgte.utils.Constants
@@ -49,13 +49,13 @@ import be.buithg.etghaifgte.utils.Constants.launchNewFragment
 class PrivacyPolicyFragment(private val urlOffer: String) : Fragment() {
 
     private lateinit var binding: FragmentPrivacyPolicyBinding
-    private lateinit var binding2: NoInternetConnectionLayoutBinding
+    private lateinit var binding2: NetworkErrorLayoutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPrivacyPolicyBinding.inflate(inflater, container, false)
-        binding2 = NoInternetConnectionLayoutBinding.bind(binding.root)
+        binding2 = NetworkErrorLayoutBinding.bind(binding.root)
         return binding.root
     }
 
@@ -196,14 +196,14 @@ class PrivacyPolicyFragment(private val urlOffer: String) : Fragment() {
     private fun showNoInternetScreen() {
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding2.apply {
-            rootNoInternetConnectionLayout.visibility = View.VISIBLE
-            rootNoInternetConnectionLayout.setOnClickListener { }
-            reconnectOfflineMaterialButton.setOnClickListener {
+            rootNetworkErrorLayout.visibility = View.VISIBLE
+            rootNetworkErrorLayout.setOnClickListener { }
+            reconnectButton.setOnClickListener {
                 activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                 binding.privacyPolicyView.reload()
-                rootNoInternetConnectionLayout.visibility = View.GONE
+                rootNetworkErrorLayout.visibility = View.GONE
             }
-            demoModeOfflineMaterialButton.setOnClickListener {
+            offlineModeButton.setOnClickListener {
                 navigateToProjectFragment()
             }
         }
