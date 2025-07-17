@@ -5,10 +5,10 @@
     tools:showIn="@layout/fragment_privacy_policy">
 
     <FrameLayout
-        android:id="@+id/root_no_internet_connection_layout"
+        android:id="@+id/root_network_error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@drawable/welcome_bg"
         android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +17,8 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
+                android:id="@+id/network_error_icon"
+                android:layout_width="160dp"
                 android:layout_height="0dp"
                 android:src="@drawable/wifi_cross_icon"
                 app:layout_constraintDimensionRatio="1:1"
@@ -27,59 +27,59 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/network_error_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="No Internet Connection"
-                android:textColor="@color/black"
-                android:textSize="28sp"
+                android:text="You're offline"
+                android:textColor="@color/white"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/network_error_icon" />
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:id="@+id/network_error_message"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="Please connect to Wi-Fi or turn on mobile data and reconnect to keep using the app"
-                android:textColor="@color/black"
-                android:textSize="20sp"
+                android:text="Turn on mobile data or connect to Wi-Fi, then try again."
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/network_error_title" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/reconnect_offline_material_button"
-                android:layout_width="196dp"
-                android:layout_height="55dp"
+                android:id="@+id/reconnect_button"
+                android:layout_width="200dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@android:color/holo_red_dark"
-                android:text="Reconnect"
-                android:textColor="@color/white"
-                android:textSize="26sp"
+                android:backgroundTint="@color/yellow"
+                android:text="Try again"
+                android:textColor="@color/black"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/network_error_message" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/demo_mode_offline_material_button"
-                android:layout_width="191dp"
-                android:layout_height="55dp"
+                android:id="@+id/offline_mode_button"
+                android:layout_width="200dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@android:color/holo_red_dark"
-                android:text="Demo mode"
+                android:backgroundTint="@android:color/transparent"
+                android:text="Continue offline"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reconnect_offline_material_button" />
+                app:layout_constraintTop_toBottomOf="@+id/reconnect_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
