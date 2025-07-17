@@ -62,7 +62,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         val prevAcc = monthAcc(prev.year, prev.monthValue)
         val currAcc = monthAcc(now.year, now.monthValue)
 
-        binding.lastMonthsText.text = "Last Month: ${prevAcc}%"
+        binding.LastMonthsText.text = "Last Month: ${prevAcc}%"
         binding.thisMonthsText.text = "This Month: ${currAcc}%"
     }
 
