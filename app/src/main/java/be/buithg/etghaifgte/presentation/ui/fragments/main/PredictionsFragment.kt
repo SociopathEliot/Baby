@@ -10,6 +10,7 @@ import be.buithg.etghaifgte.R
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.databinding.FragmentPredictionsBinding
+import androidx.core.view.isVisible
 import be.buithg.etghaifgte.presentation.ui.adapters.PredictionsAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,10 +41,9 @@ class PredictionsFragment : Fragment() {
             findNavController().navigate(R.id.tutorialFragment)
         }
 
-        viewModel.predictions.observe(viewLifecycleOwner) {
-            binding.recyclerView.apply {
-                adapter = PredictionsAdapter(it)
-            }
+        viewModel.predictions.observe(viewLifecycleOwner) { list ->
+            binding.recyclerView.adapter = PredictionsAdapter(list)
+            binding.tvEmptyPredictions.isVisible = list.isEmpty()
         }
         viewModel.loadPredictions()
     }
