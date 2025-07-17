@@ -33,7 +33,26 @@
         android:id="@+id/blogFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.BlogFragment"
         android:label="fragment_blog"
-        tools:layout="@layout/fragment_blog" />
+        tools:layout="@layout/fragment_blog" >
+        <action
+            android:id="@+id/action_blogFragment_to_blogDetailFragment"
+            app:destination="@id/blogDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blogDetailFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.BlogDetailFragment"
+        android:label="fragment_blog_detail"
+        tools:layout="@layout/fragment_blog_detail" >
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="imageRes"
+            app:argType="reference" />
+    </fragment>
     <fragment
         android:id="@+id/matchDetailFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.MatchDetailFragment"

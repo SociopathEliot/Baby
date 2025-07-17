@@ -55,6 +55,7 @@
 
             <!-- Item 1 -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardItem1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -107,6 +108,7 @@
 
             <!-- Item 2 -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardItem2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -160,6 +162,7 @@
 
             <!-- Item 3 -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardItem3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -209,7 +212,10 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView><androidx.cardview.widget.CardView
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardItem4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
