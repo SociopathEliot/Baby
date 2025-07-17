@@ -43,7 +43,6 @@ class PredictionsFragment : Fragment() {
 
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             binding.recyclerView.adapter = PredictionsAdapter(list)
-            binding.tvEmptyPredictions.isVisible = list.isEmpty()
         }
         viewModel.loadPredictions()
     }

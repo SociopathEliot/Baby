@@ -114,16 +114,6 @@
             tools:listitem="@layout/item_history_prediction"
             android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:id="@+id/tvEmptyHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Currently there's no data"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
