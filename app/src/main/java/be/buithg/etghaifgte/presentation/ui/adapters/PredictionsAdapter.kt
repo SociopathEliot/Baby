@@ -10,7 +10,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 class PredictionsAdapter(
     private val items: List<PredictionEntity>
-) : RecyclerView.Adapter<PredictionsAdapter.PredictionViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private companion object {
+        const val TYPE_ITEM = 0
+        const val TYPE_EMPTY = 1
+    }
 
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
@@ -53,15 +58,31 @@ class PredictionsAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PredictionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemPredictionBinding.inflate(inflater, parent, false)
-        return PredictionViewHolder(binding)
+        return if (viewType == TYPE_ITEM) {
+            val binding = ItemPredictionBinding.inflate(inflater, parent, false)
+            PredictionViewHolder(binding)
+        } else {
+            val binding = be.buithg.etghaifgte.databinding.ItemEmptyStateBinding.inflate(
+                inflater,
+                parent,
+                false
+            )
+            EmptyViewHolder(binding)
+        }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = if (items.isEmpty()) 1 else items.size
 
-    override fun onBindViewHolder(holder: PredictionViewHolder, position: Int) {
-        holder.bind(items[position])
+    override fun getItemViewType(position: Int): Int = if (items.isEmpty()) TYPE_EMPTY else TYPE_ITEM
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is PredictionViewHolder) {
+            holder.bind(items[position])
+        }
     }
+
+    inner class EmptyViewHolder(binding: be.buithg.etghaifgte.databinding.ItemEmptyStateBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

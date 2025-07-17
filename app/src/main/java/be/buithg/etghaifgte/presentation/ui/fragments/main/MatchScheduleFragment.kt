@@ -139,6 +139,5 @@ class MatchScheduleFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.recyclerMatcher.adapter = adapter
-        binding.tvEmptyMatches.isVisible = filtered.isEmpty()
     }
 }

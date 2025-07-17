@@ -101,7 +101,6 @@ class PredictionHistoryFragment : Fragment() {
             Filter.LOST -> allPredictions.filter { getResult(it) == "Lose" }
         }
         binding.predictionsHistoryRecyclerview.adapter = HistoryAdapter(list)
-        binding.tvEmptyHistory.isVisible = list.isEmpty()
     }
 
 }
