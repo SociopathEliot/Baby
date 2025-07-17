@@ -74,6 +74,16 @@
             android:textColor="#A5BD73"
             android:textSize="12sp" />
     </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
     <!-- Bottom content with gradient background -->
     <FrameLayout
@@ -90,7 +100,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -100,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="#171717"
-                app:cardCornerRadius="100dp"
+                app:cardCornerRadius="30dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -119,6 +129,7 @@
                         android:fontFamily="@font/montserrat_regular"
                         android:layout_weight="1"
                         android:textSize="13sp"
+                        android:maxLines="1"
                         android:text="Yesterday"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
@@ -146,6 +157,8 @@
                         android:layout_height="45dp"
                         android:layout_weight="1"
                         android:text="Tomorrow"
+                        android:maxLines="1"
+
                         android:fontFamily="@font/montserrat_regular"
                         android:textSize="13sp"
                         android:textAllCaps="false"
@@ -293,6 +306,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="WON MATCHES"
+                                android:textAlignment="center"
                                 android:textColor="#9F9F9F"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -312,4 +326,7 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- values/dimens.xml -->
+    <dimen name="toggle_height">48dp</dimen>
+    <dimen name="toggle_corner_radius">24dp</dimen> <!-- half of toggle_height -->
+    <dimen name="toggle_margin">16dp</dimen>
+
+</resources>
