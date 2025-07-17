@@ -11,6 +11,7 @@ import be.buithg.etghaifgte.R
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.databinding.FragmentPredictionHistoryBinding
+import androidx.core.view.isVisible
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.ui.adapters.HistoryAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
@@ -100,6 +101,7 @@ class PredictionHistoryFragment : Fragment() {
             Filter.LOST -> allPredictions.filter { getResult(it) == "Lose" }
         }
         binding.predictionsHistoryRecyclerview.adapter = HistoryAdapter(list)
+        binding.tvEmptyHistory.isVisible = list.isEmpty()
     }
 
 }

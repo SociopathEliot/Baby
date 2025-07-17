@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragmentDirections
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
+import androidx.core.view.isVisible
 
 import java.time.LocalDate
 
@@ -137,7 +138,7 @@ class MatchScheduleFragment : Fragment() {
                 MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(match)
             findNavController().navigate(action)
         }
-
         binding.recyclerMatcher.adapter = adapter
+        binding.tvEmptyMatches.isVisible = filtered.isEmpty()
     }
 }
