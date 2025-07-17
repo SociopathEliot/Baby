@@ -1,6 +1,7 @@
 package be.buithg.etghaifgte.presentation.ui.adapters
 
-import android.graphics.ColorSpace.match
+import android.graphics.Color
+import android.content.res.ColorStateList
 import be.buithg.etghaifgte.databinding.MatchItemBinding
 import be.buithg.etghaifgte.domain.models.Data
 
@@ -21,6 +22,8 @@ class CricketAdapter(
         const val MAX_STATUS_LEN = 15
     }
 
+    private val leagueColors = listOf("#D2F61D", "#F6771D", "#1DF6BC", "#D2F61D")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CricketViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = MatchItemBinding.inflate(
@@ -35,7 +38,7 @@ class CricketAdapter(
 
     override fun onBindViewHolder(holder: CricketViewHolder, position: Int) {
         val currentitem = items[position]
-        holder.bind(currentitem)
+        holder.bind(currentitem, position)
         holder.itemView.setOnClickListener { onItemClick(currentitem) }
     }
 
@@ -43,7 +46,7 @@ class CricketAdapter(
         private val binding: MatchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Data) {
+        fun bind(item: Data, position: Int) {
             val teams = item.teamInfo
 
             // Display team short names if available, fall back to team list
@@ -60,6 +63,8 @@ class CricketAdapter(
 
             val country = teams.getOrNull(0)?.name ?: item.teams.getOrNull(0) ?: ""
             binding.tvLeague.text = country
+            val color = Color.parseColor(leagueColors[position % leagueColors.size])
+            binding.tvLeague.backgroundTintList = ColorStateList.valueOf(color)
 
         }
         private fun String.truncate(max: Int): String =
