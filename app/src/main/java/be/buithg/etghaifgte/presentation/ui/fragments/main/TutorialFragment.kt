@@ -31,8 +31,8 @@ class TutorialFragment : Fragment() {
             }
         })
 
-        binding.btnHelp.setOnClickListener {
-            findNavController().navigate(R.id.tutorialFragment)
+        binding.btnCloseTutorial.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
