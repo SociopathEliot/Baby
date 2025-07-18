@@ -9,7 +9,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class HistoryAdapter(
-    private val items: List<PredictionEntity>
+    private val items: List<PredictionEntity>,
+    private val onViewDetails: (PredictionEntity) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private companion object {
@@ -41,6 +42,10 @@ class HistoryAdapter(
             }
             binding.textPick.text = "Pick: ${item.pick} $result"
             binding.textResult.text = result
+
+            binding.btnViewDetails.setOnClickListener {
+                onViewDetails(item)
+            }
         }
     }
 
