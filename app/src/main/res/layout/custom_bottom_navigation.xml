@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customBottomNav"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#171717"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/navHome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconHome"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navPredictions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconPredictions"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/ic_star" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Predictions"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navHistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconHistory"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/ic_history" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navStats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconStats"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/ic_stats" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My stat"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navBlog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconBlog"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/ic_blog" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blog"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navAchievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iconAchievements"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:tint="@color/custom_nav_item_color"
+            android:src="@drawable/achievements_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Achievements"
+            android:textSize="12sp"
+            android:textColor="@color/custom_nav_item_color" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -19,6 +19,12 @@
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.StatsFragment"
         android:label="fragment_stats"
         tools:layout="@layout/fragment_stats" />
+
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.AchievementsFragment"
+        android:label="fragment_achievements"
+        tools:layout="@layout/fragment_achievements" />
     <fragment
         android:id="@+id/predictionsFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.PredictionsFragment"
