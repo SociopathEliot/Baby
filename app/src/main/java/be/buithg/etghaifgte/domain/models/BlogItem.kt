@@ -6,3 +6,4 @@ data class BlogItem(
     val imageRes: Int,
     val content: String
 )
+

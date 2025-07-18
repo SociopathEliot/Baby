@@ -20,3 +20,4 @@ data class Data(
     val teams: List<String>,
     val venue: String
 ): Serializable
+

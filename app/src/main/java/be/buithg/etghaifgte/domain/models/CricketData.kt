@@ -8,3 +8,4 @@ data class CricketData(
     val info: Info,
     val status: String
 ): Serializable
+

@@ -34,7 +34,11 @@
         android:id="@+id/predictionHistoryFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.PredictionHistoryFragment"
         android:label="fragment_prediction_history"
-        tools:layout="@layout/fragment_prediction_history" />
+        tools:layout="@layout/fragment_prediction_history" >
+        <action
+            android:id="@+id/action_predictionHistoryFragment_to_matchDetailFragment"
+            app:destination="@id/matchDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/blogFragment"
         android:name="be.buithg.etghaifgte.presentation.ui.fragments.main.BlogFragment"

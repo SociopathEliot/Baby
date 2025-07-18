@@ -121,10 +121,17 @@ class MatchDetailFragment : Fragment() {
                 val upcoming = if (match.matchEnded) 0 else 1
                 val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
 
+                val venueParts = match.venue.split(",").map { it.trim() }
+                val stadium = venueParts.getOrNull(0) ?: match.venue
+                val city = venueParts.getOrNull(1) ?: ""
+
                 val entity = PredictionEntity(
                     teamA = team1,
                     teamB = team2,
                     dateTime = match.dateTimeGMT,
+                    matchType = match.matchType,
+                    stadium = stadium,
+                    city = city,
                     pick = pick,
                     predicted = 1,
                     corrects = 0,

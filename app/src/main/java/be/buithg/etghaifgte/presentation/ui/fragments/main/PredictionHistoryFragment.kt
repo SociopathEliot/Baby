@@ -15,6 +15,8 @@ import androidx.core.view.isVisible
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.ui.adapters.HistoryAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.TeamInfo
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,7 +102,42 @@ class PredictionHistoryFragment : Fragment() {
             Filter.WINNER -> allPredictions.filter { getResult(it) == "Win" }
             Filter.LOST -> allPredictions.filter { getResult(it) == "Lose" }
         }
-        binding.predictionsHistoryRecyclerview.adapter = HistoryAdapter(list)
+        binding.predictionsHistoryRecyclerview.adapter = HistoryAdapter(list) { prediction ->
+            val match = prediction.toData()
+            val action = PredictionHistoryFragmentDirections.actionPredictionHistoryFragmentToMatchDetailFragment(match)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun PredictionEntity.toData(): Data {
+        val status = if (upcoming == 1) {
+            "Upcoming"
+        } else {
+            when (wonMatches) {
+                1 -> "$teamA won"
+                2 -> "$teamB won"
+                else -> "Draw"
+            }
+        }
+
+        return Data(
+            bbbEnabled = false,
+            date = dateTime.substringBefore("T"),
+            dateTimeGMT = dateTime,
+            fantasyEnabled = false,
+            hasSquad = false,
+            id = "",
+            matchEnded = upcoming == 0,
+            matchStarted = upcoming == 0,
+            matchType = matchType,
+            name = "$teamA - $teamB",
+            score = emptyList(),
+            series_id = "",
+            status = status,
+            teamInfo = listOf(TeamInfo(shortname = teamA, name = teamA), TeamInfo(shortname = teamB, name = teamB)),
+            teams = listOf(teamA, teamB),
+            venue = listOfNotNull(stadium.takeIf { it.isNotBlank() }, city.takeIf { it.isNotBlank() }).joinToString(", ")
+        )
     }
 
 }
