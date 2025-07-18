@@ -8,3 +8,4 @@ data class Score(
     val r: Int,
     val w: Int
 ): Serializable
+

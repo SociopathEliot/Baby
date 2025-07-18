@@ -129,14 +129,16 @@ class PredictionHistoryFragment : Fragment() {
             id = "",
             matchEnded = upcoming == 0,
             matchStarted = upcoming == 0,
-            matchType = "",
+            matchType = matchType,
+
             name = "$teamA - $teamB",
             score = emptyList(),
             series_id = "",
             status = status,
             teamInfo = listOf(TeamInfo(shortname = teamA, name = teamA), TeamInfo(shortname = teamB, name = teamB)),
             teams = listOf(teamA, teamB),
-            venue = ""
+            venue = listOfNotNull(stadium.takeIf { it.isNotBlank() }, city.takeIf { it.isNotBlank() }).joinToString(", ")
+
         )
     }
 

@@ -14,3 +14,4 @@ data class Info(
     val server: Int,
     val totalRows: Int
 ): Serializable
+
