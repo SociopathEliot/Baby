@@ -8,6 +8,8 @@ import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.domain.usecase.AddPredictionUseCase
 import be.buithg.etghaifgte.domain.usecase.GetPredictionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -29,11 +31,13 @@ class PredictionsViewModel @Inject constructor(
     private val _wonCount = MutableLiveData<Int>()
     val wonCount: LiveData<Int> = _wonCount
 
+    private var filterDate: LocalDate? = null
+
     fun loadPredictions() {
         viewModelScope.launch {
             val list = getPredictionsUseCase()
             _predictions.value = list
-            updateCounts(list)
+            updateCountsWithFilter()
         }
     }
 
@@ -44,10 +48,22 @@ class PredictionsViewModel @Inject constructor(
         }
     }
 
-    private fun updateCounts(list: List<PredictionEntity>) {
-        _predictedCount.value = list.size
-        _upcomingCount.value = list.count { it.upcoming == 1 }
-        _wonCount.value = list.count {
+    fun setFilterDate(date: LocalDate) {
+        filterDate = date
+        updateCountsWithFilter()
+    }
+
+    private fun updateCountsWithFilter() {
+        val list = _predictions.value ?: emptyList()
+        val filtered = filterDate?.let { date ->
+            list.filter {
+                runCatching { LocalDateTime.parse(it.dateTime).toLocalDate() }.getOrNull() == date
+            }
+        } ?: list
+
+        _predictedCount.value = filtered.size
+        _upcomingCount.value = filtered.count { it.upcoming == 1 }
+        _wonCount.value = filtered.count {
             when (it.wonMatches) {
                 1 -> it.pick == it.teamA
                 2 -> it.pick == it.teamB
