@@ -48,6 +48,10 @@ class MatchScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // default selected day
+        selectedBtn = binding.btnToday
+        predictionsViewModel.setFilterDate(LocalDate.now())
+
         if (requireContext().isInternetAvailable()) {
             viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
         } else {
@@ -89,8 +93,6 @@ class MatchScheduleFragment : Fragment() {
             }
         }
 
-        // по умолчанию — Today выбран
-        selectedBtn = binding.btnToday
         updateSelection(binding.btnToday)
     }
     private fun updateSelection(selectedButton: MaterialButton) {
@@ -130,6 +132,7 @@ class MatchScheduleFragment : Fragment() {
             R.id.btnTomorrow -> LocalDate.now().plusDays(1)
             else -> LocalDate.now()
         }
+        predictionsViewModel.setFilterDate(selectedDate)
         val filtered = allMatches.filter {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }
