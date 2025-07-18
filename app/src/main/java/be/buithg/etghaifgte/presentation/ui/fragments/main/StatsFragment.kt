@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -89,9 +90,15 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             findNavController().navigate(R.id.tutorialFragment)
         }
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
-            updateSummary(list)
-            setupAccuracyChart(list)
-            setupLineChart(list)
+            val hasData = list.isNotEmpty()
+            binding.statsScroll.isVisible = hasData
+            binding.emptyText.isVisible = !hasData
+
+            if (hasData) {
+                updateSummary(list)
+                setupAccuracyChart(list)
+                setupLineChart(list)
+            }
         }
         viewModel.loadPredictions()
     }
