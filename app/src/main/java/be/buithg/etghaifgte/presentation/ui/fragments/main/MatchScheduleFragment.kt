@@ -132,7 +132,7 @@ class MatchScheduleFragment : Fragment() {
         predictionsViewModel.setFilterDate(selectedDate)
         val filtered = allMatches.filter {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
-        }
+        }.take(10)
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val action =
                 MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(match)

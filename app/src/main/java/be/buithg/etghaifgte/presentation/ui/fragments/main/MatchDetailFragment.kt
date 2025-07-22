@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.findNavController
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
+import be.buithg.etghaifgte.presentation.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -51,6 +52,7 @@ class MatchDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentMatchDetailBinding
     private val predictionsViewModel: PredictionsViewModel by viewModels()
+    private val noteViewModel: NoteViewModel by viewModels()
     private var selectedTeam: String? = null
 
     override fun onCreateView(
@@ -76,6 +78,13 @@ class MatchDetailFragment : Fragment() {
 
         val match = args.match
         bindMatch(match)
+        val team1Key = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
+        val team2Key = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+        val noteKey = "${team1Key}_${team2Key}_${match.dateTimeGMT}"
+        noteViewModel.loadNote(noteKey)
+        noteViewModel.noteText.observe(viewLifecycleOwner) {
+            binding.tvNote.text = it ?: ""
+        }
 
         binding.btnMakeForecast.setOnClickListener {
             val dialog = Dialog(requireContext())
@@ -144,6 +153,14 @@ class MatchDetailFragment : Fragment() {
             }
 
             dialog.show()
+        }
+
+        binding.btnTomorrow.setOnClickListener {
+            val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
+            val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+            val key = "${team1}_${team2}_${match.dateTimeGMT}"
+            val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToNoteFragment(key)
+            findNavController().navigate(action)
         }
 
     }

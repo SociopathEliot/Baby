@@ -3,6 +3,7 @@ package be.buithg.etghaifgte.di
 import android.content.Context
 import androidx.room.Room
 import be.buithg.etghaifgte.data.local.dao.PredictionDao
+import be.buithg.etghaifgte.data.local.dao.NoteDao
 import be.buithg.etghaifgte.data.local.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -24,4 +25,7 @@ object DatabaseModule {
 
     @Provides
     fun providePredictionDao(db: AppDatabase): PredictionDao = db.predictionDao()
+
+    @Provides
+    fun provideNoteDao(db: AppDatabase): NoteDao = db.noteDao()
 }
