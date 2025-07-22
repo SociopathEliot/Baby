@@ -29,6 +29,8 @@ class NoteViewModel @Inject constructor(
     fun saveNote(key: String, text: String) {
         viewModelScope.launch {
             saveNoteUseCase(NoteEntity(matchKey = key, note = text))
+            _noteText.value = text
+
         }
     }
 }
