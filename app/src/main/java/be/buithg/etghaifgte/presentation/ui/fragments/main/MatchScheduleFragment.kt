@@ -1,8 +1,11 @@
 package be.buithg.etghaifgte.presentation.ui.fragments.main
 
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -36,6 +39,8 @@ class MatchScheduleFragment : Fragment() {
     private lateinit var adapter: CricketAdapter
     private var allMatches: List<Data> = emptyList()
     private var selectedBtn: MaterialButton? = null
+    private lateinit var connectivityManager: ConnectivityManager
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +55,14 @@ class MatchScheduleFragment : Fragment() {
 
         selectedBtn = binding.btnToday
         predictionsViewModel.setFilterDate(LocalDate.now())
+
+        connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+            }
+        }
+        connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
             viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
@@ -143,5 +156,10 @@ class MatchScheduleFragment : Fragment() {
         binding.recyclerMatcher.adapter = adapter
         binding.emptyText.isVisible = filtered.isEmpty()
         binding.recyclerMatcher.isVisible = filtered.isNotEmpty()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        networkCallback?.let { connectivityManager.unregisterNetworkCallback(it) }
     }
 }
