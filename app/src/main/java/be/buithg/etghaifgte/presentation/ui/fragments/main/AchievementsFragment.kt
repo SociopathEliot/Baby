@@ -27,7 +27,7 @@ class AchievementsFragment : Fragment() {
     private lateinit var  binding: FragmentAchievementsBinding
     private val viewModel: PredictionsViewModel by viewModels()
 
-    private val levels = listOf("Level 1", "Level 2", "EXPERT")
+    private val levels = listOf("Beginner", "Intermediate", "EXPERT")
 
     private fun updateLevelUI(level: Int) {
         val index = level.coerceIn(0, levels.lastIndex)

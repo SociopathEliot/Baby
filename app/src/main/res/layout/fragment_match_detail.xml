@@ -337,7 +337,7 @@
 
             <!-- 7. Note -->
             <TextView
-                android:id="@+id/tvNote"
+                    android:id="@+id/tvNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
