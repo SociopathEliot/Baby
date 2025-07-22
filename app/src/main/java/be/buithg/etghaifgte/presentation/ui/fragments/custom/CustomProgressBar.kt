@@ -38,7 +38,7 @@ class CustomProgressBar @JvmOverloads constructor(
     }
 
     init {
-        setLayerType(LAYER_TYPE_SOFTWARE, null) // важно для отображения тени
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
     }
 
     fun setProgress(value: Float) {

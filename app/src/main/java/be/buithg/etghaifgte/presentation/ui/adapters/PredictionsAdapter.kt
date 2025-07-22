@@ -8,6 +8,7 @@ import be.buithg.etghaifgte.databinding.ItemHistoryPredictionBinding
 import be.buithg.etghaifgte.databinding.ItemPredictionBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 class PredictionsAdapter(
     private val items: List<PredictionEntity>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,14 +26,11 @@ class PredictionsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PredictionEntity) {
-            // 1) Try to parse the full ISO‑8601 date‑time string
             val dt = runCatching { LocalDateTime.parse(item.dateTime) }.getOrNull()
 
-            // 2) Format separately for time and date, with a safe fallback
             binding.textTime.text = dt?.format(timeFormatter) ?: item.dateTime
             binding.textDate.text = dt?.format(dateFormatter) ?: item.dateTime
 
-            // 3) The rest of your fields
             binding.textPrediction.text = item.pick // or "Pick: ${item.pick}"
 
             binding.textTeams.text = "${item.teamA} - ${item.teamB}"

@@ -65,7 +65,6 @@ class AchievementsFragment : Fragment() {
         val prefs = context?.getSharedPreferences() ?: return
         var achievements = prefs.getInt(ACHIEVEMENTS_COUNT_KEY, 0)
 
-        // Tournament prediction achievement
         val madePrediction = list.isNotEmpty()
         val tournamentDone = prefs.getBoolean(ACHIEVEMENT_TOURNAMENT_KEY, false)
         if (madePrediction && !tournamentDone) {
@@ -79,7 +78,6 @@ class AchievementsFragment : Fragment() {
         binding.progressIndicator2.progress = progressTournament
         binding.textPercent2.text = "$progressTournament % completed"
 
-        // First win achievement
         val winExists = list.any { isWin(it) }
         val firstWinDone = prefs.getBoolean(ACHIEVEMENT_FIRST_WIN_KEY, false)
         if (winExists && !firstWinDone) {
@@ -93,7 +91,6 @@ class AchievementsFragment : Fragment() {
         binding.progressIndicator3.progress = progressWin
         binding.textPercent3.text = "$progressWin % completed"
 
-        // Ten wins in a row achievement
         val completed = list.filter { it.upcoming == 0 }
         var streak = 0
         var maxStreak = 0

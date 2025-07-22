@@ -48,7 +48,6 @@ class MatchScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // default selected day
         selectedBtn = binding.btnToday
         predictionsViewModel.setFilterDate(LocalDate.now())
 
@@ -99,7 +98,6 @@ class MatchScheduleFragment : Fragment() {
         buttons.forEach { button ->
             val isSelected = button == selectedButton
 
-            // Цвет фона: от текущего к целевому
             val fromColor = (button.backgroundTintList?.defaultColor ?: Color.TRANSPARENT)
             val toColor = if (isSelected) Color.parseColor("#FFCE01") else Color.TRANSPARENT
 
@@ -112,7 +110,6 @@ class MatchScheduleFragment : Fragment() {
                 start()
             }
 
-            // Цвет текста: от текущего к целевому
             val fromTextColor = (button.currentTextColor)
             val toTextColor = if (isSelected) Color.BLACK else Color.WHITE
 

@@ -44,7 +44,6 @@ class SplashFragment : Fragment() {
 
         handleAppInitialization()
 
-        //todo splash animation logic
     }
     private fun startProgressAnimation() {
         val handler = Handler(Looper.getMainLooper())

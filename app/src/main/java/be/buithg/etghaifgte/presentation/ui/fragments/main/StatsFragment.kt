@@ -137,7 +137,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     private fun setupLineChart(data: List<PredictionEntity>) {
         val chart = binding.lineChart
 
-        // 1. Базовые
         chart.apply {
             setBackgroundColor(Color.TRANSPARENT)
             description.isEnabled = false
@@ -148,7 +147,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             axisRight.isEnabled = false
         }
 
-        // 2. Ось X
         val parsed = data.mapNotNull { runCatching { LocalDateTime.parse(it.dateTime) }.getOrNull() }
         val monthsSet = parsed.map { it.monthValue }.distinct().sorted()
         val months = monthsSet.map { Month.of(it).name.take(3) }
@@ -171,7 +169,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             /* bottom*/ 16f
         )
 
-        // 3. Ось Y
         chart.axisLeft.apply {
             setDrawGridLines(true)
             enableGridDashedLine(10f,10f,0f)
@@ -182,7 +179,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
 
 
-        // 4. Данные
         fun makeSet(values: List<Float>, color: Int): LineDataSet {
             return LineDataSet(values.mapIndexed { i, v -> Entry(i.toFloat(), v) }, "").apply {
                 this.color = color
@@ -222,25 +218,20 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
 
         chart.data = LineData(sets)
         chart.legend.apply {
-            // рисуем снизу под графиком
             verticalAlignment   = Legend.LegendVerticalAlignment.BOTTOM
             horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             orientation         = Legend.LegendOrientation.HORIZONTAL
 
-            // форма и цвета
             form      = Legend.LegendForm.CIRCLE
             formSize  = 8f
             textColor = Color.parseColor("#CCCCCC")
 
-            // отступы между точкой/текстом
             xEntrySpace = 16f
             yEntrySpace = 4f
 
-            // легенда вне зоны графика
             setDrawInside(false)
             isEnabled = true
 
-            // свои записи с цветами
             setCustom(listOf(
                 LegendEntry("2021", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#007AFF")),
                 LegendEntry("2022", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#4CD964")),

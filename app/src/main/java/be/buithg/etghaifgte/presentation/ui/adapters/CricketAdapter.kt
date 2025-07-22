@@ -60,7 +60,6 @@ class CricketAdapter(
         fun bind(item: Data, position: Int) {
             val teams = item.teamInfo
 
-            // Display team short names if available, fall back to team list
             val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
             val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
             binding.tvTeams1.text = team1.truncate(MAX_TEAM_LEN)
