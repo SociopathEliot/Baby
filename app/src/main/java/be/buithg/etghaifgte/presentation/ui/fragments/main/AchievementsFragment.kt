@@ -44,6 +44,12 @@ class AchievementsFragment : Fragment() {
         }
     }
 
+    private fun canClaim(progress: Int, key: String): Boolean {
+        val prefs = context?.getSharedPreferences() ?: return false
+        val done = prefs.getBoolean(key, false)
+        return done && progress >= 100
+    }
+
     private fun isWin(item: PredictionEntity): Boolean {
         return when (item.wonMatches) {
             1 -> item.pick == item.teamA
@@ -77,9 +83,21 @@ class AchievementsFragment : Fragment() {
         val level = prefs?.getInt(LEVEL_KEY, 0) ?: 0
         updateLevelUI(level)
 
-        binding.btnClaimReward.setOnClickListener { increaseLevel() }
-        binding.btnClaimReward2.setOnClickListener { increaseLevel() }
-        binding.btnClaimReward3.setOnClickListener { increaseLevel() }
+        binding.btnClaimReward.setOnClickListener {
+            if (canClaim(binding.progressIndicator.progress, ACHIEVEMENT_STREAK_KEY)) {
+                increaseLevel()
+            }
+        }
+        binding.btnClaimReward2.setOnClickListener {
+            if (canClaim(binding.progressIndicator2.progress, ACHIEVEMENT_TOURNAMENT_KEY)) {
+                increaseLevel()
+            }
+        }
+        binding.btnClaimReward3.setOnClickListener {
+            if (canClaim(binding.progressIndicator3.progress, ACHIEVEMENT_FIRST_WIN_KEY)) {
+                increaseLevel()
+            }
+        }
 
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             updateAchievements(list)
