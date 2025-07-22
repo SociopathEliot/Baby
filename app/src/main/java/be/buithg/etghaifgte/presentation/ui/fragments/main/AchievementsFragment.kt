@@ -18,6 +18,7 @@ import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENTS_COUNT_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_FIRST_WIN_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_STREAK_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_TOURNAMENT_KEY
+import be.buithg.etghaifgte.utils.Constants.LEVEL_KEY
 import be.buithg.etghaifgte.utils.Constants.getSharedPreferences
 
 @AndroidEntryPoint
@@ -25,6 +26,23 @@ class AchievementsFragment : Fragment() {
 
     private lateinit var  binding: FragmentAchievementsBinding
     private val viewModel: PredictionsViewModel by viewModels()
+
+    private val levels = listOf("Level 1", "Level 2", "EXPERT")
+
+    private fun updateLevelUI(level: Int) {
+        val index = level.coerceIn(0, levels.lastIndex)
+        binding.tvLevel.text = levels[index]
+    }
+
+    private fun increaseLevel() {
+        val prefs = context?.getSharedPreferences() ?: return
+        var level = prefs.getInt(LEVEL_KEY, 0)
+        if (level < levels.lastIndex) {
+            level++
+            prefs.edit { putInt(LEVEL_KEY, level) }
+            updateLevelUI(level)
+        }
+    }
 
     private fun isWin(item: PredictionEntity): Boolean {
         return when (item.wonMatches) {
@@ -54,6 +72,14 @@ class AchievementsFragment : Fragment() {
         binding.btnHelp.setOnClickListener {
             findNavController().navigate(R.id.tutorialFragment)
         }
+
+        val prefs = context?.getSharedPreferences()
+        val level = prefs?.getInt(LEVEL_KEY, 0) ?: 0
+        updateLevelUI(level)
+
+        binding.btnClaimReward.setOnClickListener { increaseLevel() }
+        binding.btnClaimReward2.setOnClickListener { increaseLevel() }
+        binding.btnClaimReward3.setOnClickListener { increaseLevel() }
 
         viewModel.predictions.observe(viewLifecycleOwner) { list ->
             updateAchievements(list)

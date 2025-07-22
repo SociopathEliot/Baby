@@ -17,6 +17,7 @@ object Constants {
     const val ACHIEVEMENT_STREAK_KEY = "achievement_streak"
     const val ACHIEVEMENT_TOURNAMENT_KEY = "achievement_tournament"
     const val ACHIEVEMENT_FIRST_WIN_KEY = "achievement_first_win"
+    const val LEVEL_KEY = "user_level"
     private const val SHARED_PREFERENCES_KEY = "example_sample_shared_preferences"
 
     fun Context.getSharedPreferences(): SharedPreferences {
