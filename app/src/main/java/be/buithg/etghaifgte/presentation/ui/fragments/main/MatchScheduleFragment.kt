@@ -55,6 +55,8 @@ class MatchScheduleFragment : Fragment() {
             viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
         } else {
             Log.e("FFFF", "No Internet connection")
+            allMatches = emptyList()
+            filterAndDisplay(selectedBtn ?: binding.btnToday)
         }
 
         binding.btnHelp.setOnClickListener {
@@ -139,5 +141,7 @@ class MatchScheduleFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.recyclerMatcher.adapter = adapter
+        binding.emptyText.isVisible = filtered.isEmpty()
+        binding.recyclerMatcher.isVisible = filtered.isNotEmpty()
     }
 }
