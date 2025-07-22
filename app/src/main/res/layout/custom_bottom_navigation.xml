@@ -153,6 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Achievements"
+            android:ellipsize="end"
             android:lines="1"
             android:textSize="12sp"
             android:textColor="@color/custom_nav_item_color" />

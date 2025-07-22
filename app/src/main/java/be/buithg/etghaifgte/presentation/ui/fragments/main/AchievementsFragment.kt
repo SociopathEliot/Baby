@@ -15,8 +15,11 @@ import be.buithg.etghaifgte.databinding.FragmentAchievementsBinding
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENTS_COUNT_KEY
+import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_FIRST_WIN_KEY
+import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_STREAK_CLAIMED_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_STREAK_KEY
+import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY
 import be.buithg.etghaifgte.utils.Constants.ACHIEVEMENT_TOURNAMENT_KEY
 import be.buithg.etghaifgte.utils.Constants.LEVEL_KEY
 import be.buithg.etghaifgte.utils.Constants.getSharedPreferences
@@ -27,7 +30,7 @@ class AchievementsFragment : Fragment() {
     private lateinit var  binding: FragmentAchievementsBinding
     private val viewModel: PredictionsViewModel by viewModels()
 
-    private val levels = listOf("Beginner", "Intermediate", "EXPERT")
+    private val levels = listOf("Starter","Beginner", "Intermediate", "EXPERT")
 
     private fun updateLevelUI(level: Int) {
         val index = level.coerceIn(0, levels.lastIndex)
@@ -43,11 +46,11 @@ class AchievementsFragment : Fragment() {
             updateLevelUI(level)
         }
     }
-
-    private fun canClaim(progress: Int, key: String): Boolean {
+    private fun canClaim(progress: Int, completedKey: String, claimedKey: String): Boolean {
         val prefs = context?.getSharedPreferences() ?: return false
-        val done = prefs.getBoolean(key, false)
-        return done && progress >= 100
+        val completed = prefs.getBoolean(completedKey, false)
+        val claimed   = prefs.getBoolean(claimedKey,   false)
+        return completed && progress >= 100 && !claimed
     }
 
     private fun isWin(item: PredictionEntity): Boolean {
@@ -82,20 +85,40 @@ class AchievementsFragment : Fragment() {
         val prefs = context?.getSharedPreferences()
         val level = prefs?.getInt(LEVEL_KEY, 0) ?: 0
         updateLevelUI(level)
-
         binding.btnClaimReward.setOnClickListener {
-            if (canClaim(binding.progressIndicator.progress, ACHIEVEMENT_STREAK_KEY)) {
+            val prefs = requireContext().getSharedPreferences()
+            if (canClaim(binding.progressIndicator.progress,
+                    ACHIEVEMENT_STREAK_KEY,
+                    ACHIEVEMENT_STREAK_CLAIMED_KEY)) {
                 increaseLevel()
+                prefs.edit {
+                    putBoolean(ACHIEVEMENT_STREAK_CLAIMED_KEY, true)
+                }
+                binding.btnClaimReward.isEnabled = false
             }
         }
         binding.btnClaimReward2.setOnClickListener {
-            if (canClaim(binding.progressIndicator2.progress, ACHIEVEMENT_TOURNAMENT_KEY)) {
+            val prefs = requireContext().getSharedPreferences()
+            if (canClaim(binding.progressIndicator2.progress,
+                    ACHIEVEMENT_TOURNAMENT_KEY,
+                    ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY)) {
                 increaseLevel()
+                prefs.edit {
+                    putBoolean(ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY, true)
+                }
+                binding.btnClaimReward2.isEnabled = false
             }
         }
         binding.btnClaimReward3.setOnClickListener {
-            if (canClaim(binding.progressIndicator3.progress, ACHIEVEMENT_FIRST_WIN_KEY)) {
+            val prefs = requireContext().getSharedPreferences()
+            if (canClaim(binding.progressIndicator3.progress,
+                    ACHIEVEMENT_FIRST_WIN_KEY,
+                    ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY)) {
                 increaseLevel()
+                prefs.edit {
+                    putBoolean(ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY, true)
+                }
+                binding.btnClaimReward3.isEnabled = false
             }
         }
 
