@@ -337,12 +337,12 @@
 
             <!-- 7. Note -->
             <TextView
+                android:id="@+id/tvNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:lineSpacingExtra="2dp"
-                android:text="Note: A will face Team B in a highly anticipated clsh...."
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
 
