@@ -91,6 +91,7 @@ class MatchDetailFragment : Fragment() {
         val editNote = binding.editNote
         val saveButton = binding.btnSaveNote
 
+
         binding.btnMakeForecast.setOnClickListener {
             val dialog = Dialog(requireContext())
             val dialogBinding = DialogPredictWinnerBinding.inflate(layoutInflater)
@@ -176,6 +177,7 @@ class MatchDetailFragment : Fragment() {
             editNote.visibility = View.GONE
             saveButton.visibility = View.GONE
             binding.tvNote.visibility = View.VISIBLE
+
         }
 
     }
