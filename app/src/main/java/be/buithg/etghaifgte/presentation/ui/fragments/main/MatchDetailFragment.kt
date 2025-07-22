@@ -82,9 +82,15 @@ class MatchDetailFragment : Fragment() {
         val team2Key = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
         val noteKey = "${team1Key}_${team2Key}_${match.dateTimeGMT}"
         noteViewModel.loadNote(noteKey)
-        noteViewModel.noteText.observe(viewLifecycleOwner) {
-            binding.tvNote.text = it ?: ""
+        noteViewModel.noteText.observe(viewLifecycleOwner) { text ->
+            binding.tvNote.text = text?.takeIf { it.isNotBlank() }
+                ?: getString(R.string.no_notes)
         }
+
+        val infoContainer = binding.infoContainer
+        val editNote = binding.editNote
+        val saveButton = binding.btnSaveNote
+
 
         binding.btnMakeForecast.setOnClickListener {
             val dialog = Dialog(requireContext())
@@ -156,11 +162,22 @@ class MatchDetailFragment : Fragment() {
         }
 
         binding.btnTomorrow.setOnClickListener {
-            val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-            val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
-            val key = "${team1}_${team2}_${match.dateTimeGMT}"
-            val action = MatchDetailFragmentDirections.actionMatchDetailFragmentToNoteFragment(key)
-            findNavController().navigate(action)
+            infoContainer.visibility = View.GONE
+            binding.tvNote.visibility = View.GONE
+            editNote.visibility = View.VISIBLE
+            saveButton.visibility = View.VISIBLE
+            editNote.setText(noteViewModel.noteText.value ?: "")
+        }
+
+        saveButton.setOnClickListener {
+            val text = editNote.text.toString()
+            noteViewModel.saveNote(noteKey, text)
+            binding.tvNote.text = text.takeIf { it.isNotBlank() } ?: getString(R.string.no_notes)
+            infoContainer.visibility = View.VISIBLE
+            editNote.visibility = View.GONE
+            saveButton.visibility = View.GONE
+            binding.tvNote.visibility = View.VISIBLE
+
         }
 
     }
