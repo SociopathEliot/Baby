@@ -323,6 +323,16 @@
                 tools:listitem="@layout/match_item"
                 android:layout_gravity="bottom"/>
 
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No matches available"
+                android:textColor="#FFFFFF"
+                android:padding="16dp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </FrameLayout>
