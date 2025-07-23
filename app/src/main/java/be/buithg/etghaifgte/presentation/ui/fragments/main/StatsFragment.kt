@@ -19,12 +19,11 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.view.ViewGroup
 
 @AndroidEntryPoint
 class StatsFragment : Fragment(R.layout.fragment_stats) {
@@ -32,21 +31,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     private var _binding: FragmentStatsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PredictionsViewModel by viewModels()
-
-    private fun setupLegend(entries: List<Pair<String, Int>>) {
-        val container = binding.legendContainer
-        container.removeAllViews()
-        val inflater = LayoutInflater.from(container.context)
-        entries.forEach { (label, color) ->
-            val item = inflater.inflate(R.layout.view_legend_item, container, false)
-            val dot = item.findViewById<View>(R.id.legendDot)
-            val text = item.findViewById<TextView>(R.id.legendText)
-            dot.backgroundTintList = android.content.res.ColorStateList.valueOf(color)
-            text.text = label
-            val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-            container.addView(item, params)
-        }
-    }
 
     private fun isWin(item: PredictionEntity): Boolean {
         return when (item.wonMatches) {
@@ -233,15 +217,30 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
 
         chart.data = LineData(sets)
-        chart.legend.isEnabled = false
-        setupLegend(
-            listOf(
-                "2021" to Color.parseColor("#007AFF"),
-                "2022" to Color.parseColor("#4CD964"),
-                "2023" to Color.parseColor("#FF9500"),
-                "2024" to Color.parseColor("#32D3F2")
-            )
-        )
+        chart.legend.apply {
+            verticalAlignment   = Legend.LegendVerticalAlignment.BOTTOM
+            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            orientation         = Legend.LegendOrientation.HORIZONTAL
+
+            form      = Legend.LegendForm.CIRCLE
+            formSize  = 8f
+            textColor = Color.parseColor("#CCCCCC")
+
+            xOffset = -42f
+
+            xEntrySpace = 32f
+            yEntrySpace = 4f
+
+            setDrawInside(false)
+            isEnabled = true
+
+            setCustom(listOf(
+                LegendEntry("2021", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#007AFF")),
+                LegendEntry("2022", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#4CD964")),
+                LegendEntry("2023", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#FF9500")),
+                LegendEntry("2024", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#32D3F2"))
+            ))
+        }
 
 
         chart.invalidate()
@@ -320,15 +319,32 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
 
         chart.data = LineData(sets)
-        chart.legend.isEnabled = false
-        setupLegend(
-            listOf(
-                "2021" to Color.parseColor("#007AFF"),
-                "2022" to Color.parseColor("#4CD964"),
-                "2023" to Color.parseColor("#FF9500"),
-                "2024" to Color.parseColor("#32D3F2")
+        chart.legend.apply {
+            verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            orientation = Legend.LegendOrientation.HORIZONTAL
+
+            form = Legend.LegendForm.CIRCLE
+            formSize = 8f
+            textColor = Color.parseColor("#CCCCCC")
+
+            xOffset = -42f
+
+            xEntrySpace = 32f
+            yEntrySpace = 4f
+
+            setDrawInside(false)
+            isEnabled = true
+
+            setCustom(
+                listOf(
+                    LegendEntry("2021", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#007AFF")),
+                    LegendEntry("2022", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#4CD964")),
+                    LegendEntry("2023", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#FF9500")),
+                    LegendEntry("2024", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#32D3F2"))
+                )
             )
-        )
+        }
 
         chart.invalidate()
     }

@@ -26,6 +26,8 @@ import be.buithg.etghaifgte.presentation.ui.fragments.main.MatchScheduleFragment
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.utils.NetworkUtils.isInternetAvailable
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 import java.time.LocalDate
 
@@ -56,16 +58,19 @@ class MatchScheduleFragment : Fragment() {
         selectedBtn = binding.btnToday
         predictionsViewModel.setFilterDate(LocalDate.now())
 
-        connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+                }
             }
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
-            viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+            viewModel. loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
@@ -109,6 +114,7 @@ class MatchScheduleFragment : Fragment() {
 
         updateSelection(binding.btnToday)
     }
+
     private fun updateSelection(selectedButton: MaterialButton) {
         buttons.forEach { button ->
             val isSelected = button == selectedButton
@@ -150,7 +156,9 @@ class MatchScheduleFragment : Fragment() {
         }.take(10)
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val action =
-                MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(match)
+                MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(
+                    match
+                )
             findNavController().navigate(action)
         }
         binding.recyclerMatcher.adapter = adapter

@@ -317,6 +317,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
+                    android:ellipsize="end"
                     android:text="Wankhede Stadium"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
