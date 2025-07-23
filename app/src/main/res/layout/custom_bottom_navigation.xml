@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Predictions"
             android:ellipsize="end"
+            android:lines="1"
             android:textSize="12sp"
             android:textColor="@color/custom_nav_item_color" />
     </LinearLayout>
