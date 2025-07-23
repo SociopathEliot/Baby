@@ -157,7 +157,8 @@ class MatchScheduleFragment : Fragment() {
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val action =
                 MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(
-                    match
+                    match,
+                    false
                 )
             findNavController().navigate(action)
         }

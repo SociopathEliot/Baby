@@ -80,6 +80,9 @@ class MatchDetailFragment : Fragment() {
         }
 
         val match = args.match
+        if (args.fromHistory) {
+            binding.btnMakeForecast.visibility = View.GONE
+        }
         bindMatch(match)
         val team1Key = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
         val team2Key = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
