@@ -71,6 +71,10 @@
         <argument
             android:name="match"
             app:argType="be.buithg.etghaifgte.domain.models.Data" />
+        <argument
+            android:name="fromHistory"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_matchDetailFragment_to_noteFragment"
             app:destination="@id/noteFragment" />

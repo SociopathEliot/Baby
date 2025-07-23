@@ -104,7 +104,10 @@ class PredictionHistoryFragment : Fragment() {
         }
         binding.predictionsHistoryRecyclerview.adapter = HistoryAdapter(list) { prediction ->
             val match = prediction.toData()
-            val action = PredictionHistoryFragmentDirections.actionPredictionHistoryFragmentToMatchDetailFragment(match)
+            val action = PredictionHistoryFragmentDirections.actionPredictionHistoryFragmentToMatchDetailFragment(
+                match,
+                true
+            )
             findNavController().navigate(action)
         }
     }
