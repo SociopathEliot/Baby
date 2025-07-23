@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.presentation.viewmodel.NoteViewModel
@@ -54,6 +55,8 @@ class MatchDetailFragment : Fragment() {
     private val predictionsViewModel: PredictionsViewModel by viewModels()
     private val noteViewModel: NoteViewModel by viewModels()
     private var selectedTeam: String? = null
+    private lateinit var buttons: List<MaterialButton>
+    private var selectedBtn: MaterialButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,6 +93,19 @@ class MatchDetailFragment : Fragment() {
         val infoContainer = binding.infoContainer
         val editNote = binding.editNote
         val saveButton = binding.btnSaveNote
+
+        buttons = listOf(binding.btnToday, binding.btnTomorrow)
+        selectedBtn = binding.btnToday
+        updateSelection(binding.btnToday)
+
+        binding.btnToday.setOnClickListener {
+            selectedBtn = binding.btnToday
+            updateSelection(binding.btnToday)
+            infoContainer.visibility = View.VISIBLE
+            editNote.visibility = View.GONE
+            saveButton.visibility = View.GONE
+            binding.tvNote.visibility = View.VISIBLE
+        }
 
 
         binding.btnMakeForecast.setOnClickListener {
@@ -162,6 +178,8 @@ class MatchDetailFragment : Fragment() {
         }
 
         binding.btnTomorrow.setOnClickListener {
+            selectedBtn = binding.btnTomorrow
+            updateSelection(binding.btnTomorrow)
             infoContainer.visibility = View.GONE
             binding.tvNote.visibility = View.GONE
             editNote.visibility = View.VISIBLE
@@ -177,9 +195,21 @@ class MatchDetailFragment : Fragment() {
             editNote.visibility = View.GONE
             saveButton.visibility = View.GONE
             binding.tvNote.visibility = View.VISIBLE
+            selectedBtn = binding.btnToday
+            updateSelection(binding.btnToday)
 
         }
 
+    }
+
+    private fun updateSelection(selectedButton: MaterialButton) {
+        buttons.forEach { button ->
+            val isSelected = button == selectedButton
+            val bg = if (isSelected) "#FFCE01" else "#00000000"
+            val text = if (isSelected) "#000000" else "#FFFFFF"
+            button.setBackgroundColor(Color.parseColor(bg))
+            button.setTextColor(Color.parseColor(text))
+        }
     }
 
     private fun bindMatch(match: Data) {
