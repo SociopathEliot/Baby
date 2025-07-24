@@ -97,8 +97,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             if (hasData) {
                 updateSummary(list)
                 setupAccuracyChart(list)
+                setupLineChart(list)
             }
-            setupDemoLineChart()
         }
         viewModel.loadPredictions()
     }
@@ -226,9 +226,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             formSize  = 8f
             textColor = Color.parseColor("#CCCCCC")
 
-            xOffset = -42f
-
-            xEntrySpace = 32f
+            xEntrySpace = 16f
             yEntrySpace = 4f
 
             setDrawInside(false)
@@ -242,109 +240,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             ))
         }
 
-
-        chart.invalidate()
-    }
-
-    private fun setupDemoLineChart() {
-        val chart = binding.lineChart
-
-        chart.apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            description.isEnabled = false
-            legend.isEnabled = true
-            setTouchEnabled(true)
-            isDragEnabled = true
-            setScaleEnabled(false)
-            axisRight.isEnabled = false
-        }
-
-        val monthsSet = listOf(1, 2, 3, 4, 5, 9)
-        val months = monthsSet.map { Month.of(it).name.take(3) }
-
-        chart.xAxis.apply {
-            position = XAxis.XAxisPosition.BOTTOM
-            textColor = Color.parseColor("#AAAAAA")
-            textSize = 10f
-            setDrawAxisLine(true)
-            setDrawGridLines(true)
-            enableGridDashedLine(10f, 10f, 0f)
-            valueFormatter = IndexAxisValueFormatter(months)
-            granularity = 1f
-            yOffset = 8f
-        }
-
-        chart.setExtraOffsets(0f, 0f, 0f, 16f)
-
-        chart.axisLeft.apply {
-            setDrawGridLines(true)
-            enableGridDashedLine(10f, 10f, 0f)
-            axisMinimum = 0f
-            axisMaximum = 100f
-            granularity = 20f
-            textColor = Color.parseColor("#666666")
-        }
-
-        fun makeSet(values: List<Float>, color: Int): LineDataSet {
-            return LineDataSet(values.mapIndexed { i, v -> Entry(i.toFloat(), v) }, "").apply {
-                this.color = color
-                lineWidth = 2.5f
-                setDrawCircles(true)
-                circleRadius = 4f
-                setCircleColor(color)
-                circleHoleRadius = 2f
-                circleHoleColor = Color.BLACK
-                setDrawValues(false)
-                mode = LineDataSet.Mode.CUBIC_BEZIER
-                cubicIntensity = 0.2f
-            }
-        }
-
-        val colorMap = mapOf(
-            2021 to Color.parseColor("#007AFF"),
-            2022 to Color.parseColor("#4CD964"),
-            2023 to Color.parseColor("#FF9500"),
-            2024 to Color.parseColor("#32D3F2")
-        )
-
-        val dataMap = mapOf(
-            2021 to listOf(25f, 58f, 58f, 68f, 12f, 96f),
-            2022 to listOf(50f, 35f, 78f, 55f, 38f, 45f),
-            2023 to listOf(40f, 90f, 85f, 82f, 65f, 92f),
-            2024 to listOf(55f, 10f, 35f, 90f, 80f, 15f)
-        )
-
-        val sets = listOf(2021, 2022, 2023, 2024).map { year ->
-            makeSet(dataMap[year] ?: emptyList(), colorMap[year] ?: Color.WHITE)
-        }
-
-        chart.data = LineData(sets)
-        chart.legend.apply {
-            verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-            orientation = Legend.LegendOrientation.HORIZONTAL
-
-            form = Legend.LegendForm.CIRCLE
-            formSize = 8f
-            textColor = Color.parseColor("#CCCCCC")
-
-            xOffset = -42f
-
-            xEntrySpace = 32f
-            yEntrySpace = 4f
-
-            setDrawInside(false)
-            isEnabled = true
-
-            setCustom(
-                listOf(
-                    LegendEntry("2021", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#007AFF")),
-                    LegendEntry("2022", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#4CD964")),
-                    LegendEntry("2023", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#FF9500")),
-                    LegendEntry("2024", Legend.LegendForm.CIRCLE, 8f, 2f, null, Color.parseColor("#32D3F2"))
-                )
-            )
-        }
 
         chart.invalidate()
     }

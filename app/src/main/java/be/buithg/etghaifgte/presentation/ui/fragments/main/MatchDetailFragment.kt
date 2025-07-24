@@ -80,7 +80,7 @@ class MatchDetailFragment : Fragment() {
         }
 
         val match = args.match
-        if (args.fromHistory) {
+        if (args.fromHistory || match.matchEnded) {
             binding.btnMakeForecast.visibility = View.GONE
         }
         bindMatch(match)

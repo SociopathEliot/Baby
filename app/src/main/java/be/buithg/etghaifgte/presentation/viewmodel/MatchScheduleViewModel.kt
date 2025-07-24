@@ -15,7 +15,7 @@ class MatchScheduleViewModel @Inject constructor(
     private val getCurrentMatchesUseCase: GetCurrentMatchesUseCase
 ) : ViewModel() {
 
-    private val _matches = MutableLiveData<List<Data>>()
+    private val _matches = MutableLiveData<List<Data>>(emptyList())
     val matches: LiveData<List<Data>> = _matches
 
     fun loadMatches(apiKey: String) {
