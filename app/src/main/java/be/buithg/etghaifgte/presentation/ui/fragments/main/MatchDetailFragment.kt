@@ -152,7 +152,7 @@ class MatchDetailFragment : Fragment() {
             dialogBinding.btnSubmit.setOnClickListener {
                 val pick = selectedTeam ?: return@setOnClickListener
 
-                val upcoming = if (match.matchEnded) 0 else 1
+                val upcoming = if (match.matchStarted) 0 else 1
                 val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
 
                 val venueParts = match.venue.split(",").map { it.trim() }
