@@ -13,4 +13,7 @@ interface PredictionDao {
 
     @Query("SELECT * FROM predictions ORDER BY id DESC")
     suspend fun getAll(): List<PredictionEntity>
+
+    @Query("SELECT * FROM predictions WHERE teamA = :teamA AND teamB = :teamB AND dateTime = :dateTime LIMIT 1")
+    suspend fun getByMatch(teamA: String, teamB: String, dateTime: String): PredictionEntity?
 }
