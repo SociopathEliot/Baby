@@ -47,6 +47,10 @@ class AchievementsFragment : Fragment() {
             updateLevelUI(level)
         }
     }
+
+    private fun showLevelUpMessage() {
+        Toast.makeText(context, "You have reached a new level.", Toast.LENGTH_SHORT).show()
+    }
     private fun canClaim(progress: Int, completedKey: String, claimedKey: String): Boolean {
         val prefs = context?.getSharedPreferences() ?: return false
         val completed = prefs.getBoolean(completedKey, false)
@@ -105,6 +109,7 @@ class AchievementsFragment : Fragment() {
                     ACHIEVEMENT_STREAK_KEY,
                     ACHIEVEMENT_STREAK_CLAIMED_KEY)) {
                 increaseLevel()
+                showLevelUpMessage()
                 prefs.edit {
                     putBoolean(ACHIEVEMENT_STREAK_CLAIMED_KEY, true)
                 }
@@ -124,6 +129,7 @@ class AchievementsFragment : Fragment() {
                     ACHIEVEMENT_TOURNAMENT_KEY,
                     ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY)) {
                 increaseLevel()
+                showLevelUpMessage()
                 prefs.edit {
                     putBoolean(ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY, true)
                 }
@@ -143,6 +149,7 @@ class AchievementsFragment : Fragment() {
                     ACHIEVEMENT_FIRST_WIN_KEY,
                     ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY)) {
                 increaseLevel()
+                showLevelUpMessage()
                 prefs.edit {
                     putBoolean(ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY, true)
                 }
