@@ -50,7 +50,7 @@
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="18:30"
+            android:text="12:30"
             android:fontFamily="@font/montserrat_medium"
             android:textColor="#FFF"
             android:layout_marginTop="15dp"
@@ -59,34 +59,24 @@
             app:layout_constraintTop_toBottomOf="@+id/tvLeague"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Команды -->
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <!-- Описание матча -->
+        <TextView
+            android:id="@+id/tvMatchDescription"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTime"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:text="Ruby White Team – Mahe Megalo Strikers"
+            android:fontFamily="@font/montserrat_regular"
+            android:textColor="#FFF"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvTime"
+            app:layout_constraintStart_toEndOf="@+id/tvTime"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:id="@+id/tvTeams1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="Team A "
-                android:textColor="#FFF"
-                android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tvTeams2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="Team B"
-                android:textColor="#FFF"
-                android:textSize="14sp" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -236,35 +236,47 @@
             </LinearLayout>
 
             <!-- 3. Country -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/bg_date_linear"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_date_linear"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:text="Country"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    <!-- 1) Label: wrap_content -->
+                    <TextView
+                        android:id="@+id/tvCountryLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Country"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvCountryValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="India"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    <!-- 2) Небольшой отступ между label и value -->
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="0dp" />
 
-            <!-- 4. City -->
+                    <!-- 3) Value: занимает оставшееся место, ellipsize -->
+                    <TextView
+                        android:id="@+id/tvCountryValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="India"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+                <!-- 4. City -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"

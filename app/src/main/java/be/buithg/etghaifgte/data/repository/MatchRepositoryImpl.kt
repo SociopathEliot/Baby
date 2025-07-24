@@ -9,7 +9,8 @@ class MatchRepositoryImpl @Inject constructor(
     private val api: ApiInterface
 ) : MatchRepository {
     override suspend fun getCurrentMatches(apiKey: String): List<Data> {
-        return api.getLiveScore(apiKey).data
+        return api.getLiveScore(apiKey).data ?: emptyList()
     }
+
 }
 

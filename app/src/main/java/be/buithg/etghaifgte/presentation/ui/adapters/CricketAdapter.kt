@@ -58,29 +58,36 @@ class CricketAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Data, position: Int) {
-            val teams = item.teamInfo
-
-            val team1 = item.teamInfo.getOrNull(0)?.shortname ?: item.teams.getOrNull(0) ?: ""
-            val team2 = item.teamInfo.getOrNull(1)?.shortname ?: item.teams.getOrNull(1) ?: ""
-            binding.tvTeams1.text = team1.truncate(MAX_TEAM_LEN)
-            binding.tvTeams2.text = " - ${team2.truncate(MAX_TEAM_LEN)}"
-
-            binding.tvTime.text = item.dateTimeGMT
+            // 1) Время
             val ldt = LocalDateTime.parse(item.dateTimeGMT)
             val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
             binding.tvTime.text = ldt.format(timeFormatter)
-            binding.tvStatus.text = item.status.truncate(MAX_STATUS_LEN)
 
-            val country = teams.getOrNull(0)?.name ?: item.teams.getOrNull(0) ?: ""
+            // 2) Статус
+            val statusText = if (!item.matchEnded) "Upcoming" else item.status
+            binding.tvStatus.text = statusText.truncate(MAX_STATUS_LEN)
+
+            // 3) Лига
+            val country = item.teamInfo.getOrNull(0)?.name
+                ?: item.teams.getOrNull(0).orEmpty()
             binding.tvLeague.text = country
             val color = Color.parseColor(leagueColors[position % leagueColors.size])
             binding.tvLeague.backgroundTintList = ColorStateList.valueOf(color)
 
+            // 4) Описание матча (один TextView вместо двух)
+            val rawTeam1 = item.teamInfo.getOrNull(0)?.shortname
+                ?: item.teams.getOrNull(0).orEmpty()
+            val rawTeam2 = item.teamInfo.getOrNull(1)?.shortname
+                ?: item.teams.getOrNull(1).orEmpty()
+
+            val t1 = rawTeam1.truncate(MAX_TEAM_LEN)
+            val t2 = rawTeam2.truncate(MAX_TEAM_LEN)
+            binding.tvMatchDescription.text = "$t1 – $t2"
         }
+
         private fun String.truncate(max: Int): String =
             if (length > max) take(max) + "…" else this
-    }
-
+        }
     inner class EmptyViewHolder(binding: be.buithg.etghaifgte.databinding.ItemEmptyStateBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
