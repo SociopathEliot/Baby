@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import android.widget.Toast
 import be.buithg.etghaifgte.R
 import androidx.fragment.app.viewModels
 import androidx.core.content.edit
@@ -53,6 +54,18 @@ class AchievementsFragment : Fragment() {
         return completed && progress >= 100 && !claimed
     }
 
+    private fun showClaimError(progress: Int, completedKey: String, claimedKey: String) {
+        val prefs = context?.getSharedPreferences() ?: return
+        val claimed = prefs.getBoolean(claimedKey, false)
+        val completed = prefs.getBoolean(completedKey, false)
+        val message = if (claimed) {
+            "You already achieved that"
+        } else {
+            "You haven't completed this task yet"
+        }
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun isWin(item: PredictionEntity): Boolean {
         return when (item.wonMatches) {
             1 -> item.pick == item.teamA
@@ -87,7 +100,8 @@ class AchievementsFragment : Fragment() {
         updateLevelUI(level)
         binding.btnClaimReward.setOnClickListener {
             val prefs = requireContext().getSharedPreferences()
-            if (canClaim(binding.progressIndicator.progress,
+            if (canClaim(
+                    binding.progressIndicator.progress,
                     ACHIEVEMENT_STREAK_KEY,
                     ACHIEVEMENT_STREAK_CLAIMED_KEY)) {
                 increaseLevel()
@@ -95,11 +109,18 @@ class AchievementsFragment : Fragment() {
                     putBoolean(ACHIEVEMENT_STREAK_CLAIMED_KEY, true)
                 }
                 binding.btnClaimReward.isEnabled = false
+            } else {
+                showClaimError(
+                    binding.progressIndicator.progress,
+                    ACHIEVEMENT_STREAK_KEY,
+                    ACHIEVEMENT_STREAK_CLAIMED_KEY
+                )
             }
         }
         binding.btnClaimReward2.setOnClickListener {
             val prefs = requireContext().getSharedPreferences()
-            if (canClaim(binding.progressIndicator2.progress,
+            if (canClaim(
+                    binding.progressIndicator2.progress,
                     ACHIEVEMENT_TOURNAMENT_KEY,
                     ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY)) {
                 increaseLevel()
@@ -107,11 +128,18 @@ class AchievementsFragment : Fragment() {
                     putBoolean(ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY, true)
                 }
                 binding.btnClaimReward2.isEnabled = false
+            } else {
+                showClaimError(
+                    binding.progressIndicator2.progress,
+                    ACHIEVEMENT_TOURNAMENT_KEY,
+                    ACHIEVEMENT_TOURNAMENT_CLAIMED_KEY
+                )
             }
         }
         binding.btnClaimReward3.setOnClickListener {
             val prefs = requireContext().getSharedPreferences()
-            if (canClaim(binding.progressIndicator3.progress,
+            if (canClaim(
+                    binding.progressIndicator3.progress,
                     ACHIEVEMENT_FIRST_WIN_KEY,
                     ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY)) {
                 increaseLevel()
@@ -119,6 +147,12 @@ class AchievementsFragment : Fragment() {
                     putBoolean(ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY, true)
                 }
                 binding.btnClaimReward3.isEnabled = false
+            } else {
+                showClaimError(
+                    binding.progressIndicator3.progress,
+                    ACHIEVEMENT_FIRST_WIN_KEY,
+                    ACHIEVEMENT_FIRSTWIN_CLAIMED_KEY
+                )
             }
         }
 
