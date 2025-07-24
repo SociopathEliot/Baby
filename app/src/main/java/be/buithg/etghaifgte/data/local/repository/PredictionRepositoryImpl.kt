@@ -15,4 +15,8 @@ class PredictionRepositoryImpl @Inject constructor(
     override suspend fun getPredictions(): List<PredictionEntity> {
         return dao.getAll()
     }
+
+    override suspend fun getPrediction(teamA: String, teamB: String, dateTime: String): PredictionEntity? {
+        return dao.getByMatch(teamA, teamB, dateTime)
+    }
 }

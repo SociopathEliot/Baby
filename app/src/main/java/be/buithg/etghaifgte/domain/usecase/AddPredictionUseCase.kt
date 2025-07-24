@@ -8,6 +8,12 @@ class AddPredictionUseCase @Inject constructor(
     private val repository: PredictionRepository
 ) {
     suspend operator fun invoke(prediction: PredictionEntity) {
-        repository.addPrediction(prediction)
+        val existing = repository.getPrediction(prediction.teamA, prediction.teamB, prediction.dateTime)
+        val entity = if (existing != null) {
+            prediction.copy(id = existing.id)
+        } else {
+            prediction
+        }
+        repository.addPrediction(entity)
     }
 }
