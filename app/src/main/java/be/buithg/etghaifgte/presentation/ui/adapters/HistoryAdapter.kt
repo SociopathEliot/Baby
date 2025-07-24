@@ -31,7 +31,13 @@ class HistoryAdapter(
 
             binding.textTeams.text = "${item.teamA} - ${item.teamB}"
 
-            val result = if (item.upcoming == 1) {
+            val isUpcoming = if (item.upcoming == 1) {
+                true
+            } else {
+                dt?.isAfter(LocalDateTime.now()) ?: false
+            }
+
+            val result = if (isUpcoming) {
                 "Upcoming"
             } else {
                 when (item.wonMatches) {

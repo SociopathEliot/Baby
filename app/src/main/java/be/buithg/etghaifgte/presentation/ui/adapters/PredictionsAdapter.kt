@@ -27,15 +27,20 @@ class PredictionsAdapter(
 
         fun bind(item: PredictionEntity) {
             val dt = runCatching { LocalDateTime.parse(item.dateTime) }.getOrNull()
-
+            
             binding.textTime.text = dt?.format(timeFormatter) ?: item.dateTime
             binding.textDate.text = dt?.format(dateFormatter) ?: item.dateTime
 
             binding.textPrediction.text = item.pick // or "Pick: ${item.pick}"
 
             binding.textTeams.text = "${item.teamA} - ${item.teamB}"
+            val isUpcoming = if (item.upcoming == 1) {
+                true
+            } else {
+                dt?.isAfter(LocalDateTime.now()) ?: false
+            }
 
-            if (item.upcoming == 1) {
+            if (isUpcoming) {
                 binding.textPrediction.text = "Upcoming"
                 binding.imageResult.setImageResource(be.buithg.etghaifgte.R.drawable.icon_upcoming)
             } else {
