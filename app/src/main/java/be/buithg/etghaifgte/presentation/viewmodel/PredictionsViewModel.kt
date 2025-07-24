@@ -33,6 +33,12 @@ class PredictionsViewModel @Inject constructor(
 
     private var filterDate: LocalDate? = null
 
+    private fun isUpcoming(item: PredictionEntity): Boolean {
+        if (item.upcoming == 1) return true
+        val dt = runCatching { LocalDateTime.parse(item.dateTime) }.getOrNull()
+        return dt?.isAfter(LocalDateTime.now()) ?: false
+    }
+
     fun loadPredictions() {
         viewModelScope.launch {
             val list = getPredictionsUseCase()
@@ -62,11 +68,12 @@ class PredictionsViewModel @Inject constructor(
         } ?: list
 
         _predictedCount.value = filtered.size
-        _upcomingCount.value = filtered.count { it.upcoming == 1 }
-        _wonCount.value = filtered.count {
-            when (it.wonMatches) {
-                1 -> it.pick == it.teamA
-                2 -> it.pick == it.teamB
+        _upcomingCount.value = filtered.count { isUpcoming(it) }
+        _wonCount.value = filtered.count { prediction ->
+            if (isUpcoming(prediction)) return@count false
+            when (prediction.wonMatches) {
+                1 -> prediction.pick == prediction.teamA
+                2 -> prediction.pick == prediction.teamB
                 else -> false
             }
         }

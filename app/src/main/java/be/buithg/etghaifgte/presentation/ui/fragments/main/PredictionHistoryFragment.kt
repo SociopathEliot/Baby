@@ -18,6 +18,7 @@ import be.buithg.etghaifgte.presentation.viewmodel.PredictionsViewModel
 import be.buithg.etghaifgte.domain.models.Data
 import be.buithg.etghaifgte.domain.models.TeamInfo
 import com.google.android.material.button.MaterialButton
+import java.time.LocalDateTime
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,8 +89,14 @@ class PredictionHistoryFragment : Fragment() {
         }
     }
 
+    private fun isUpcoming(item: PredictionEntity): Boolean {
+        if (item.upcoming == 1) return true
+        val dt = runCatching { LocalDateTime.parse(item.dateTime) }.getOrNull()
+        return dt?.isAfter(LocalDateTime.now()) ?: false
+    }
+
     private fun getResult(item: PredictionEntity): String {
-        if (item.upcoming == 1) return "матч еще не начался"
+        if (isUpcoming(item)) return "матч еще не начался"
         return when (item.wonMatches) {
             1 -> if (item.pick == item.teamA) "Win" else "Lose"
             2 -> if (item.pick == item.teamB) "Win" else "Lose"
@@ -113,7 +120,8 @@ class PredictionHistoryFragment : Fragment() {
     }
 
     private fun PredictionEntity.toData(): Data {
-        val status = if (upcoming == 1) {
+        val upcomingFlag = isUpcoming(this)
+        val status = if (upcomingFlag) {
             "Upcoming"
         } else {
             when (wonMatches) {
@@ -130,8 +138,8 @@ class PredictionHistoryFragment : Fragment() {
             fantasyEnabled = false,
             hasSquad = false,
             id = "",
-            matchEnded = upcoming == 0,
-            matchStarted = upcoming == 0,
+            matchEnded = !upcomingFlag,
+            matchStarted = !upcomingFlag,
             matchType = matchType,
 
             name = "$teamA - $teamB",
