@@ -150,7 +150,7 @@ class MatchDetailFragment : Fragment() {
             }
 
             dialogBinding.btnSubmit.setOnClickListener {
-                val pick = selectedTeam ?: return@setOnClickListener
+                val pick = selectedTeam ?: "Draw"
 
                 val upcoming = if (match.matchEnded) 0 else 1
                 val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
