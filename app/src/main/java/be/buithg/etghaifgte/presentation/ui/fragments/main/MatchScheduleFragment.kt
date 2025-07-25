@@ -81,6 +81,16 @@ class MatchScheduleFragment : Fragment() {
             findNavController().navigate(R.id.tutorialFragment)
         }
 
+        binding.btnRetry.setOnClickListener {
+            if (requireContext().isInternetAvailable()) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+                }
+            } else {
+                Log.e("FFFF", "No Internet connection")
+            }
+        }
+
         viewModel.matches.observe(viewLifecycleOwner) { list ->
             allMatches = list ?: emptyList()
             filterAndDisplay(selectedBtn ?: binding.btnToday)
@@ -164,6 +174,7 @@ class MatchScheduleFragment : Fragment() {
         }
         binding.recyclerMatcher.adapter = adapter
         binding.emptyText.isVisible = filtered.isEmpty()
+        binding.btnRetry.isVisible = filtered.isEmpty()
         binding.recyclerMatcher.isVisible = filtered.isNotEmpty()
     }
 
