@@ -63,14 +63,14 @@ class MatchScheduleFragment : Fragment() {
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("1c5944c7-5c88-4b8c-80f3-c88f198ed725")
+                    viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
                 }
             }
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
-            viewModel.loadMatches("1c5944c7-5c88-4b8c-80f3-c88f198ed725")
+            viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
