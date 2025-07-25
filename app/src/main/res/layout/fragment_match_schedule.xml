@@ -333,6 +333,17 @@
                 android:padding="16dp"
                 android:visibility="gone" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRetry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Retry"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:backgroundTint="#FFCE01"
+                app:cornerRadius="20dp" />
+
         </LinearLayout>
 
     </FrameLayout>
