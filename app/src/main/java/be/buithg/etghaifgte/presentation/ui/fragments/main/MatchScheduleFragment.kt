@@ -100,9 +100,6 @@ class MatchScheduleFragment : Fragment() {
         predictionsViewModel.predictedCount.observe(viewLifecycleOwner) {
             binding.tvPredictedCount.text = it.toString()
         }
-        predictionsViewModel.upcomingCount.observe(viewLifecycleOwner) {
-            binding.tvUpcomingCount.text = it.toString().padStart(2, '0')
-        }
         predictionsViewModel.wonCount.observe(viewLifecycleOwner) {
             binding.tvWonCount.text = it.toString().padStart(2, '0')
         }
@@ -164,6 +161,8 @@ class MatchScheduleFragment : Fragment() {
         val filtered = allMatches.filter {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }.take(10)
+        val upcomingCount = filtered.count { !it.matchStarted }
+        binding.tvUpcomingCount.text = upcomingCount.toString().padStart(2, '0')
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val action =
                 MatchScheduleFragmentDirections.actionMatchScheduleFragmentToMatchDetailFragment(
