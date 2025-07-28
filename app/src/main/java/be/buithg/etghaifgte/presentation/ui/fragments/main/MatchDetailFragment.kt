@@ -30,18 +30,21 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class MatchDetailFragment : Fragment() {
 
-    private fun winnerTeam(match: Data): Int {
-        val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-        val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+    private fun String?.orDash(): String = this?.takeIf { it.isNotBlank() } ?: "-"
 
-        if (match.score.size >= 2) {
-            val score1 = match.score[0].r
-            val score2 = match.score[1].r
+    private fun winnerTeam(match: Data): Int {
+        val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
+        val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
+
+        val scores = match.score ?: emptyList()
+        if (scores.size >= 2) {
+            val score1 = scores[0].r
+            val score2 = scores[1].r
             if (score1 > score2) return 1
             if (score2 > score1) return 2
         }
 
-        val status = match.status.lowercase()
+        val status = match.status?.lowercase() ?: ""
         return when {
             status.contains(team1.lowercase()) -> 1
             status.contains(team2.lowercase()) -> 2
@@ -84,9 +87,9 @@ class MatchDetailFragment : Fragment() {
             binding.btnMakeForecast.visibility = View.GONE
         }
         bindMatch(match)
-        val team1Key = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-        val team2Key = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
-        val noteKey = "${team1Key}_${team2Key}_${match.dateTimeGMT}"
+        val team1Key = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
+        val team2Key = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
+        val noteKey = "${team1Key}_${team2Key}_${match.dateTimeGMT ?: ""}"
         noteViewModel.loadNote(noteKey)
         noteViewModel.noteText.observe(viewLifecycleOwner) { text ->
             binding.tvNote.text = text?.takeIf { it.isNotBlank() }
@@ -120,8 +123,8 @@ class MatchDetailFragment : Fragment() {
 
             selectedTeam = null
 
-            val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-            val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+            val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
+            val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
             dialogBinding.teamAText.text = team1
             dialogBinding.teamBText.text = team2
 
@@ -155,15 +158,15 @@ class MatchDetailFragment : Fragment() {
                 val upcoming = if (match.matchEnded) 0 else 1
                 val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
 
-                val venueParts = match.venue.split(",").map { it.trim() }
-                val stadium = venueParts.getOrNull(0) ?: match.venue
+                val venueParts = match.venue?.split(",")?.map { it.trim() } ?: emptyList()
+                val stadium = venueParts.getOrNull(0) ?: match.venue.orEmpty()
                 val city = venueParts.getOrNull(1) ?: ""
 
                 val entity = PredictionEntity(
                     teamA = team1,
                     teamB = team2,
-                    dateTime = match.dateTimeGMT,
-                    matchType = match.matchType,
+                    dateTime = match.dateTimeGMT ?: "",
+                    matchType = match.matchType ?: "",
                     stadium = stadium,
                     city = city,
                     pick = pick,
@@ -219,29 +222,29 @@ class MatchDetailFragment : Fragment() {
         val formatterDate = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
 
-        val date = runCatching { LocalDate.parse(match.date) }.getOrNull()
-        val time = runCatching { LocalDateTime.parse(match.dateTimeGMT) }.getOrNull()
+        val date = runCatching { LocalDate.parse(match.date ?: "") }.getOrNull()
+        val time = runCatching { LocalDateTime.parse(match.dateTimeGMT ?: "") }.getOrNull()
 
-        binding.tvDateValue.text = date?.format(formatterDate) ?: match.date
-        binding.tvTimeValue.text = time?.format(formatterTime) ?: match.dateTimeGMT
+        binding.tvDateValue.text = date?.format(formatterDate) ?: (match.date.orDash())
+        binding.tvTimeValue.text = time?.format(formatterTime) ?: (match.dateTimeGMT.orDash())
 
         val teams = match.teamInfo
-        val team1 = teams.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-        val team2 = teams.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+        val team1 = teams?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: "-"
+        val team2 = teams?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: "-"
         binding.teamTitle.text = "$team1 - $team2"
 
-        binding.statusText.text = match.status
+        binding.statusText.text = match.status.orDash()
 
-        val venueParts = match.venue.split(",").map { it.trim() }
-        val stadium = venueParts.getOrNull(0) ?: match.venue
-        val city = venueParts.getOrNull(1) ?: ""
+        val venueParts = match.venue?.split(",")?.map { it.trim() } ?: emptyList()
+        val stadium = venueParts.getOrNull(0)?.takeIf { it.isNotBlank() } ?: match.venue.orDash()
+        val city = venueParts.getOrNull(1)?.takeIf { it.isNotBlank() } ?: "-"
 
         binding.tvStadiumValue.text = stadium
         binding.tvCityValue.text = city
 
-        val country = teams.getOrNull(0)?.name ?: match.teams.getOrNull(0) ?: ""
+        val country = teams?.getOrNull(0)?.name ?: match.teams?.getOrNull(0) ?: "-"
         binding.tvCountryValue.text = country
 
-        binding.tvMatchTypeValue.text = match.matchType.uppercase()
+        binding.tvMatchTypeValue.text = match.matchType?.uppercase() ?: "-"
     }
 }

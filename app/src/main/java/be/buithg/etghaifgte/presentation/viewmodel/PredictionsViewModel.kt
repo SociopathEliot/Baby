@@ -39,17 +39,18 @@ class PredictionsViewModel @Inject constructor(
     private val apiKey = "1c5944c7-5c88-4b8c-80f3-c88f198ed725"
 
     private fun winnerTeam(match: Data): Int {
-        val team1 = match.teamInfo.getOrNull(0)?.shortname ?: match.teams.getOrNull(0) ?: ""
-        val team2 = match.teamInfo.getOrNull(1)?.shortname ?: match.teams.getOrNull(1) ?: ""
+        val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
+        val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
 
-        if (match.score.size >= 2) {
-            val score1 = match.score[0].r
-            val score2 = match.score[1].r
+        val scores = match.score ?: emptyList()
+        if (scores.size >= 2) {
+            val score1 = scores[0].r
+            val score2 = scores[1].r
             if (score1 > score2) return 1
             if (score2 > score1) return 2
         }
 
-        val status = match.status.lowercase()
+        val status = match.status?.lowercase() ?: ""
         return when {
             status.contains(team1.lowercase()) -> 1
             status.contains(team2.lowercase()) -> 2
