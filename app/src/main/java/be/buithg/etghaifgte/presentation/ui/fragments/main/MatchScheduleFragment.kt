@@ -70,7 +70,7 @@ class MatchScheduleFragment : Fragment() {
         connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
-            viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+            viewModel.loadMatches("86a2e7c9-d2d7-48f2-aefc-1e15adaa255e")
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
@@ -84,7 +84,7 @@ class MatchScheduleFragment : Fragment() {
         binding.btnRetry.setOnClickListener {
             if (requireContext().isInternetAvailable()) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("80112a77-1b12-4356-94a5-806e6db2dc64")
+                    viewModel.loadMatches("86a2e7c9-d2d7-48f2-aefc-1e15adaa255e")
                 }
             } else {
                 Log.e("FFFF", "No Internet connection")
