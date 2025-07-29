@@ -4,6 +4,7 @@ import be.buithg.etghaifgte.data.remote.ApiInterface
 import be.buithg.etghaifgte.domain.models.Match
 import be.buithg.etghaifgte.domain.models.Event
 import be.buithg.etghaifgte.domain.models.toMatch
+
 import be.buithg.etghaifgte.domain.repository.MatchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -58,5 +59,6 @@ class MatchRepositoryImpl @Inject constructor(
         val allMatches = deferreds.map { it.await() }.flatten()
 
         allMatches.sortedBy { runCatching { Instant.parse(it.dateTimeGMT) }.getOrNull() }
+
     }
 }

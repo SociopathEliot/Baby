@@ -70,6 +70,7 @@ class MatchScheduleFragment : Fragment() {
             override fun onAvailable(network: Network) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.loadMatches(defaultDates())
+
                 }
             }
         }
@@ -77,6 +78,7 @@ class MatchScheduleFragment : Fragment() {
 
         if (requireContext().isInternetAvailable()) {
             viewModel.loadMatches(defaultDates())
+
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
@@ -91,6 +93,7 @@ class MatchScheduleFragment : Fragment() {
             if (requireContext().isInternetAvailable()) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.loadMatches(defaultDates())
+
                 }
             } else {
                 Log.e("FFFF", "No Internet connection")

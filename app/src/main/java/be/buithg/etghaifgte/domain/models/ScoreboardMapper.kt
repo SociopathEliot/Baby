@@ -28,4 +28,5 @@ fun Event.toMatch(league: String?): Match? {
         scoreB = away?.score?.toIntOrNull(),
         matchEnded = comp.status?.type?.completed ?: false
     )
+
 }

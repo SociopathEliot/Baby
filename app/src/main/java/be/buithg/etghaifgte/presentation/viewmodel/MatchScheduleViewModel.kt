@@ -21,6 +21,7 @@ class MatchScheduleViewModel @Inject constructor(
     fun loadMatches(dates: List<java.time.LocalDate>) {
         viewModelScope.launch {
             runCatching { getCurrentMatchesUseCase(dates) }
+
                 .onSuccess { _matches.value = it }
                 .onFailure { _matches.value = emptyList() }
         }

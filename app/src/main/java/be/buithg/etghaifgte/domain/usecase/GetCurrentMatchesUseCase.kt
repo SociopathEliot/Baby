@@ -12,6 +12,7 @@ class GetCurrentMatchesUseCase @Inject constructor(
         limit: Int = 100
     ): List<Match> {
         return repository.getMatches(dates, limit)
+
     }
 }
 
