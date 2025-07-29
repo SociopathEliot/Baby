@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.FragmentMatchScheduleBinding
-import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.Match
 import be.buithg.etghaifgte.presentation.ui.adapters.CricketAdapter
 import be.buithg.etghaifgte.presentation.viewmodel.MatchScheduleViewModel
 
@@ -39,10 +39,16 @@ class MatchScheduleFragment : Fragment() {
     private val predictionsViewModel: PredictionsViewModel by viewModels()
     private lateinit var buttons: List<MaterialButton>
     private lateinit var adapter: CricketAdapter
-    private var allMatches: List<Data> = emptyList()
+    private var allMatches: List<Match> = emptyList()
     private var selectedBtn: MaterialButton? = null
     private lateinit var connectivityManager: ConnectivityManager
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
+    private fun defaultDates(): List<LocalDate> = listOf(
+        LocalDate.now().minusDays(1),
+        LocalDate.now(),
+        LocalDate.now().plusDays(1)
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,14 +69,14 @@ class MatchScheduleFragment : Fragment() {
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("9f341900-3c1d-4a56-ab0e-b6f93b82b678")
+                    viewModel.loadMatches(defaultDates())
                 }
             }
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
-            viewModel.loadMatches("9f341900-3c1d-4a56-ab0e-b6f93b82b678")
+            viewModel.loadMatches(defaultDates())
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
@@ -84,7 +90,7 @@ class MatchScheduleFragment : Fragment() {
         binding.btnRetry.setOnClickListener {
             if (requireContext().isInternetAvailable()) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("9f341900-3c1d-4a56-ab0e-b6f93b82b678")
+                    viewModel.loadMatches(defaultDates())
                 }
             } else {
                 Log.e("FFFF", "No Internet connection")
@@ -161,7 +167,7 @@ class MatchScheduleFragment : Fragment() {
         val filtered = allMatches.filter {
             runCatching { LocalDate.parse(it.date) }.getOrNull() == selectedDate
         }.take(10)
-        val upcomingCount = filtered.count { !it.matchStarted }
+        val upcomingCount = filtered.count { !it.matchEnded }
         binding.tvUpcomingCount.text = upcomingCount.toString().padStart(2, '0')
         adapter = CricketAdapter(ArrayList(filtered)) { match ->
             val action =
