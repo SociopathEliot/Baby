@@ -36,8 +36,6 @@ class PredictionsViewModel @Inject constructor(
 
     private var filterDate: LocalDate? = null
 
-    private val sport = "soccer"
-    private val league = "eng.1"
 
     private fun winnerTeam(match: Match): Int {
         val scoreA = match.scoreA ?: 0
@@ -100,7 +98,11 @@ class PredictionsViewModel @Inject constructor(
         val upcomingList = list.filter { isUpcoming(it) }
         if (upcomingList.isEmpty()) return
 
-        val matches = runCatching { getCurrentMatchesUseCase(sport, league) }.getOrNull() ?: return
+        val dates = upcomingList.mapNotNull {
+            runCatching { LocalDateTime.parse(it.dateTime).toLocalDate() }.getOrNull()
+        }.distinct()
+
+        val matches = runCatching { getCurrentMatchesUseCase(dates) }.getOrNull() ?: return
 
         upcomingList.forEach { prediction ->
             val match = matches.find { it.dateTimeGMT == prediction.dateTime }
