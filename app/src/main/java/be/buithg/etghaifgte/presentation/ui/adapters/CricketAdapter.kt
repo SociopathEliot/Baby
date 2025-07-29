@@ -3,7 +3,7 @@ package be.buithg.etghaifgte.presentation.ui.adapters
 import android.graphics.Color
 import android.content.res.ColorStateList
 import be.buithg.etghaifgte.databinding.MatchItemBinding
-import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.Match
 
 
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class CricketAdapter(
-    private val items: ArrayList<Data>,
-    private val onItemClick: (Data) -> Unit
+    private val items: ArrayList<Match>,
+    private val onItemClick: (Match) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private companion object {
@@ -57,7 +57,7 @@ class CricketAdapter(
         private val binding: MatchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Data, position: Int) {
+        fun bind(item: Match, position: Int) {
             // 1) Время
             val ldt = runCatching { LocalDateTime.parse(item.dateTimeGMT ?: "") }.getOrNull()
             val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -68,17 +68,13 @@ class CricketAdapter(
             binding.tvStatus.text = statusText.truncate(MAX_STATUS_LEN)
 
             // 3) Лига
-            val country = item.teamInfo?.getOrNull(0)?.name
-                ?: item.teams?.getOrNull(0).orEmpty()
-            binding.tvLeague.text = country
+            binding.tvLeague.text = item.league ?: ""
             val color = Color.parseColor(leagueColors[position % leagueColors.size])
             binding.tvLeague.backgroundTintList = ColorStateList.valueOf(color)
 
             // 4) Описание матча (один TextView вместо двух)
-            val rawTeam1 = item.teamInfo?.getOrNull(0)?.shortname
-                ?: item.teams?.getOrNull(0).orEmpty()
-            val rawTeam2 = item.teamInfo?.getOrNull(1)?.shortname
-                ?: item.teams?.getOrNull(1).orEmpty()
+            val rawTeam1 = item.teamA.orEmpty()
+            val rawTeam2 = item.teamB.orEmpty()
 
             val t1 = rawTeam1.truncate(MAX_TEAM_LEN)
             val t2 = rawTeam2.truncate(MAX_TEAM_LEN)

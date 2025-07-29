@@ -12,7 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import be.buithg.etghaifgte.R
 import be.buithg.etghaifgte.databinding.DialogPredictWinnerBinding
 import be.buithg.etghaifgte.databinding.FragmentMatchDetailBinding
-import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.Match
 import androidx.navigation.fragment.navArgs
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -32,23 +32,12 @@ class MatchDetailFragment : Fragment() {
 
     private fun String?.orDash(): String = this?.takeIf { it.isNotBlank() } ?: "-"
 
-    private fun winnerTeam(match: Data): Int {
-        val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
-        val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
-
-        val scores = match.score ?: emptyList()
-        if (scores.size >= 2) {
-            val score1 = scores[0].r
-            val score2 = scores[1].r
-            if (score1 > score2) return 1
-            if (score2 > score1) return 2
-        }
-
-        val status = match.status?.lowercase() ?: ""
+    private fun winnerTeam(match: Match): Int {
+        val scoreA = match.scoreA ?: 0
+        val scoreB = match.scoreB ?: 0
         return when {
-            status.contains(team1.lowercase()) -> 1
-            status.contains(team2.lowercase()) -> 2
-            status.contains("draw") -> 0
+            scoreA > scoreB -> 1
+            scoreB > scoreA -> 2
             else -> 0
         }
     }
@@ -87,8 +76,8 @@ class MatchDetailFragment : Fragment() {
             binding.btnMakeForecast.visibility = View.GONE
         }
         bindMatch(match)
-        val team1Key = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
-        val team2Key = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
+        val team1Key = match.teamA ?: ""
+        val team2Key = match.teamB ?: ""
         val noteKey = "${team1Key}_${team2Key}_${match.dateTimeGMT ?: ""}"
         noteViewModel.loadNote(noteKey)
         noteViewModel.noteText.observe(viewLifecycleOwner) { text ->
@@ -123,8 +112,8 @@ class MatchDetailFragment : Fragment() {
 
             selectedTeam = null
 
-            val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
-            val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
+            val team1 = match.teamA ?: ""
+            val team2 = match.teamB ?: ""
             dialogBinding.teamAText.text = team1
             dialogBinding.teamBText.text = team2
 
@@ -158,9 +147,8 @@ class MatchDetailFragment : Fragment() {
                 val upcoming = if (match.matchEnded) 0 else 1
                 val wonMatches = if (match.matchEnded) winnerTeam(match) else 0
 
-                val venueParts = match.venue?.split(",")?.map { it.trim() } ?: emptyList()
-                val stadium = venueParts.getOrNull(0) ?: match.venue.orEmpty()
-                val city = venueParts.getOrNull(1) ?: ""
+                val stadium = match.venue ?: ""
+                val city = match.city ?: ""
 
                 val entity = PredictionEntity(
                     teamA = team1,
@@ -218,7 +206,7 @@ class MatchDetailFragment : Fragment() {
         }
     }
 
-    private fun bindMatch(match: Data) {
+    private fun bindMatch(match: Match) {
         val formatterDate = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
 
@@ -228,22 +216,19 @@ class MatchDetailFragment : Fragment() {
         binding.tvDateValue.text = date?.format(formatterDate) ?: (match.date.orDash())
         binding.tvTimeValue.text = time?.format(formatterTime) ?: (match.dateTimeGMT.orDash())
 
-        val teams = match.teamInfo
-        val team1 = teams?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: "-"
-        val team2 = teams?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: "-"
+        val team1 = match.teamA ?: "-"
+        val team2 = match.teamB ?: "-"
         binding.teamTitle.text = "$team1 - $team2"
 
         binding.statusText.text = match.status.orDash()
 
-        val venueParts = match.venue?.split(",")?.map { it.trim() } ?: emptyList()
-        val stadium = venueParts.getOrNull(0)?.takeIf { it.isNotBlank() } ?: match.venue.orDash()
-        val city = venueParts.getOrNull(1)?.takeIf { it.isNotBlank() } ?: "-"
+        val stadium = match.venue.orDash()
+        val city = match.city ?: "-"
 
         binding.tvStadiumValue.text = stadium
         binding.tvCityValue.text = city
 
-        val country = teams?.getOrNull(0)?.name ?: match.teams?.getOrNull(0) ?: "-"
-        binding.tvCountryValue.text = country
+        binding.tvCountryValue.text = match.country ?: "-"
 
         binding.tvMatchTypeValue.text = match.matchType?.uppercase() ?: "-"
     }
