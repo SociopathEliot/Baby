@@ -18,9 +18,9 @@ class MatchScheduleViewModel @Inject constructor(
     private val _matches = MutableLiveData<List<Match>>(emptyList())
     val matches: LiveData<List<Match>> = _matches
 
-    fun loadMatches(sport: String, league: String, date: String? = null) {
+    fun loadMatches(dates: List<java.time.LocalDate>) {
         viewModelScope.launch {
-            runCatching { getCurrentMatchesUseCase(sport, league, date) }
+            runCatching { getCurrentMatchesUseCase(dates) }
                 .onSuccess { _matches.value = it }
                 .onFailure { _matches.value = emptyList() }
         }

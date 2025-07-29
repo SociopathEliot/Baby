@@ -44,6 +44,12 @@ class MatchScheduleFragment : Fragment() {
     private lateinit var connectivityManager: ConnectivityManager
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
+    private fun defaultDates(): List<LocalDate> = listOf(
+        LocalDate.now().minusDays(1),
+        LocalDate.now(),
+        LocalDate.now().plusDays(1)
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,14 +69,14 @@ class MatchScheduleFragment : Fragment() {
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("soccer", "eng.1")
+                    viewModel.loadMatches(defaultDates())
                 }
             }
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
 
         if (requireContext().isInternetAvailable()) {
-            viewModel.loadMatches("soccer", "eng.1")
+            viewModel.loadMatches(defaultDates())
         } else {
             Log.e("FFFF", "No Internet connection")
             allMatches = emptyList()
@@ -84,7 +90,7 @@ class MatchScheduleFragment : Fragment() {
         binding.btnRetry.setOnClickListener {
             if (requireContext().isInternetAvailable()) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.loadMatches("soccer", "eng.1")
+                    viewModel.loadMatches(defaultDates())
                 }
             } else {
                 Log.e("FFFF", "No Internet connection")

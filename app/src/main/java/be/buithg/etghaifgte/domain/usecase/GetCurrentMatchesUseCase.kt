@@ -8,12 +8,10 @@ class GetCurrentMatchesUseCase @Inject constructor(
     private val repository: MatchRepository
 ) {
     suspend operator fun invoke(
-        sport: String,
-        league: String,
-        date: String? = null,
+        dates: List<java.time.LocalDate>,
         limit: Int = 100
     ): List<Match> {
-        return repository.getScoreboard(sport, league, date, limit)
+        return repository.getMatches(dates, limit)
     }
 }
 
