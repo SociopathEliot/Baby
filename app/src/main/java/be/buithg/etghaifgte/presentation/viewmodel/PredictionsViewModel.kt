@@ -8,7 +8,7 @@ import be.buithg.etghaifgte.data.local.entity.PredictionEntity
 import be.buithg.etghaifgte.domain.usecase.AddPredictionUseCase
 import be.buithg.etghaifgte.domain.usecase.GetPredictionsUseCase
 import be.buithg.etghaifgte.domain.usecase.GetCurrentMatchesUseCase
-import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.Match
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -36,25 +36,15 @@ class PredictionsViewModel @Inject constructor(
 
     private var filterDate: LocalDate? = null
 
-    private val apiKey = "1c5944c7-5c88-4b8c-80f3-c88f198ed725"
+    private val sport = "soccer"
+    private val league = "eng.1"
 
-    private fun winnerTeam(match: Data): Int {
-        val team1 = match.teamInfo?.getOrNull(0)?.shortname ?: match.teams?.getOrNull(0) ?: ""
-        val team2 = match.teamInfo?.getOrNull(1)?.shortname ?: match.teams?.getOrNull(1) ?: ""
-
-        val scores = match.score ?: emptyList()
-        if (scores.size >= 2) {
-            val score1 = scores[0].r
-            val score2 = scores[1].r
-            if (score1 > score2) return 1
-            if (score2 > score1) return 2
-        }
-
-        val status = match.status?.lowercase() ?: ""
+    private fun winnerTeam(match: Match): Int {
+        val scoreA = match.scoreA ?: 0
+        val scoreB = match.scoreB ?: 0
         return when {
-            status.contains(team1.lowercase()) -> 1
-            status.contains(team2.lowercase()) -> 2
-            status.contains("draw") -> 0
+            scoreA > scoreB -> 1
+            scoreB > scoreA -> 2
             else -> 0
         }
     }
@@ -110,7 +100,7 @@ class PredictionsViewModel @Inject constructor(
         val upcomingList = list.filter { isUpcoming(it) }
         if (upcomingList.isEmpty()) return
 
-        val matches = runCatching { getCurrentMatchesUseCase(apiKey) }.getOrNull() ?: return
+        val matches = runCatching { getCurrentMatchesUseCase(sport, league) }.getOrNull() ?: return
 
         upcomingList.forEach { prediction ->
             val match = matches.find { it.dateTimeGMT == prediction.dateTime }

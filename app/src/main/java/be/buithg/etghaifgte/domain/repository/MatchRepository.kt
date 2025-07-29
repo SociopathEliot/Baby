@@ -1,8 +1,13 @@
 package be.buithg.etghaifgte.domain.repository
 
-import be.buithg.etghaifgte.domain.models.Data
+import be.buithg.etghaifgte.domain.models.Match
 
 interface MatchRepository {
-    suspend fun getCurrentMatches(apiKey: String): List<Data>
+    suspend fun getScoreboard(
+        sport: String,
+        league: String,
+        date: String? = null,
+        limit: Int = 100
+    ): List<Match>
 }
 
